@@ -4,8 +4,8 @@ module ADS127L01 #(
     input wire clk,rst_n,en,
     input wire sck,fsync,din,
     output logic start,pd, // power-down pin
-    (* mark_debug="true" *) output logic [23:0] data,
-    (* mark_debug="true" *) output logic valid,
+    output logic [23:0] data,
+    output logic valid,
     output logic cs_n,dsin,dout
 );
     /**

@@ -1,6 +1,6 @@
 `timescale 1ns/10ps
 
-module downConvertionSys_tb #(
+module down_convertion_sys_tb #(
     parameter integer DW    = 24,
     parameter integer PW    = 32,
     parameter integer LC_DW = 12
@@ -8,7 +8,7 @@ module downConvertionSys_tb #(
 );
     logic clk,rst_n,en;
     logic signed [DW-1:0] in;
-    logic signed [DW-1:0] ibb,qbb;
+    (* mark_debug="true" *) logic signed [DW-1:0] ibb,qbb;
     logic signed [DW-1:0] sin_in,cos_in;
     logic signed [31:0] freq,freq_in;
     initial begin
@@ -39,17 +39,18 @@ endmodule
 /**
 * en: come from AD's frame sync, drive the en of orthDds,512ksps, take as 512kHz
 */
-module downConvertionSys #(
+module down_conversion_sys #(
     parameter integer DW    = 24,
     parameter integer PW    = 32,
     parameter integer LC_DW = 12
 )(
     input wire clk, rst_n, en,
-    (* mark_debug="true" *) input wire signed [PW-1:0] freq,
+    input wire signed [PW-1:0] freq,
     input wire signed [DW-1:0] in,              //Q1.23
-    (* mark_debug="true" *) output logic signed [DW-1:0] iout, qout
+    output logic signed [DW-1:0] iout, qout,
+    output logic valid
 );
-    (* mark_debug="true" *) logic signed [LC_DW-1:0] lc_sin, lc_cos;
+    logic signed [LC_DW-1:0] lc_sin, lc_cos;
     logic signed [DW-1:0] idec102400, qdec102400, idec51200, qdec51200, idec25600, qdec25600;
     logic signed [DW-1:0] ifil102400, qfil102400, ifil51200, qfil51200;
     logic signed [DW-1:0] imix, qmix;
@@ -99,4 +100,5 @@ module downConvertionSys #(
     theqDeci51200(clk, rst_n, en51200, en25600, qfil51200, qdec25600);
     assign iout = idec25600;
     assign qout = qdec25600;
+    assign valid = en25600;
 endmodule
