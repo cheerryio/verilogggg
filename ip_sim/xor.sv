@@ -2,6 +2,7 @@
 `timescale 1ns/10ps
 
 module xor_tb;
+import axi_vip_pkg::*;
     logic [9:0] A0,A1;
     logic [9:0] C0,C1;
     xorf #(10) theXorfInst0(A0,1'b0,C0);
