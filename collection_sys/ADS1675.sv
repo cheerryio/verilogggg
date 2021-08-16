@@ -15,16 +15,17 @@
 * before starting to capture data.
 */
 module ADS1675 #(
-
+    parameter integer DW = 24
 )(
-    input wire aclk,areset_n,en,
+     input wire aclk,areset_n,en,
     // configure
-    output wire dr0,dr1,dr2,
-    output wire fpath,ll_cfg,lvds,clk_sel,
+     output wire dr0,dr1,dr2,
+     output wire fpath,ll_cfg,lvds,clk_sel,
     // control
-    output wire cs_n,start,pown,
-    input wire sclk,dout,drdy,
-    output logic valid
+     output wire cs_n,start,pown,
+     input wire sclk,dout,drdy,
+     output logic signed [DW-1:0] data,
+     output logic valid
 );
     assign dr0    =1'b1;
     assign dr1    =1'b0;
@@ -39,66 +40,34 @@ module ADS1675 #(
     assign start  =1'b1;
     assign pown   =1'b1;
 
-    localparam integer DW = 23;
+    logic [DW-1:0] shift_data;
+    logic [1:0] drdy_dly;
 
-    localparam integer BEFORE_START = 2'd0;
-    localparam integer IDLE         = 2'd1;
-    localparam integer RETREIVING    = 2'd2;
-    logic [1:0] state;
-    logic [DW-1:0] shift_data,data;
-    logic [$clog2(DW)-1:0] cnt;
+    always_ff @( posedge aclk ) begin
+        if(!areset_n) begin
+            drdy_dly<= '0;
+        end
+        else if(en) begin
+            drdy_dly<={drdy_dly[0],drdy};
+        end
+    end
+    assign valid=~drdy_dly[1] & drdy_dly[0];
+
+    always_ff @( negedge sclk ) begin
+        if(!areset_n) begin
+            shift_data<='0;
+        end
+        else if(en) begin
+            shift_data<={shift_data[DW-2:0],dout};
+        end
+    end
 
     always_ff @( posedge drdy ) begin
         if(!areset_n) begin
-            state<=BEFORE_START;
-        end
-        else if(state==BEFORE_START)
-        begin
-            state<=IDLE;
-        end
-        else if(state==IDLE)
-        begin
-            state<=RETREIVING;
-        end
-        else if(state==RETREIVING)
-        begin
-            // ignore
-            state<=state;
-        end 
-    end
-
-    always_ff @( negedge sclk ) begin
-        if(state==RETREIVING)
-        begin
-            shift_data<={shift_data[21:0],dout};
-        end
-    end
-
-    always_ff @( posedge sclk ) begin
-        if(!areset_n)
-        begin
-            cnt<='0;
-        end
-        else if(state==RETREIVING)
-        begin
-            cnt<=cnt+1;
-        end
-        else
-        begin
-            cnt<='0;
-        end
-    end
-
-    always_ff @( posedge sclk ) begin
-        if(!areset_n) begin
             data<='0;
         end
-        else if(state==RETREIVING && cnt==DW)
-        begin
+        else if(en) begin
             data<=shift_data;
         end
     end
-
-    assign valid=cnt==DW;
-
 endmodule

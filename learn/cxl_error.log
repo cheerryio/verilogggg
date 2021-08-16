@@ -1,0 +1,308 @@
+==============================================================================
+Library 'xtlm' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap xtlm /opt/Xilinx/compile_simlib/questasim/xtlm 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -nodebug -std=c++11 -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/include -I /opt/Xilinx/compile_simlib/questasim/common_cpp_v1_0/include -O3 -fPIC -DXTLM_DLL -work xtlm /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/utils/xsc_sim_manager.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/utils/xtlm_aximm_fifo.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/utils/xtlm_aximm_initiator_rd_socket_util.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/utils/xtlm_aximm_initiator_wr_socket_util.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/utils/xtlm_aximm_master_if.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/utils/xtlm_aximm_passthru_module.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/utils/xtlm_aximm_rd_protocol_checker.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/utils/xtlm_aximm_target_rd_socket_util.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/utils/xtlm_aximm_target_wr_socket_util.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/utils/xtlm_aximm_tracer.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/utils/xtlm_aximm_transaction_logger.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/utils/xtlm_aximm_wr_protocol_checker.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/utils/xtlm_axis_initiator_socket_util.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/utils/xtlm_axis_master_if.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/utils/xtlm_axis_passthru_module.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/utils/xtlm_axis_slave_if.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/utils/xtlm_axis_target_socket_util.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/utils/xtlm_axis_transaction_logger.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/utils/xtlm_logger.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/xtlm_adaptors/xaximm_tlm2xtlm.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/xtlm_adaptors/xaximm_xtlm2tlm.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/xtlm_interfaces/tlm_mem_manager.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/xtlm_interfaces/xtlm_aximm_mem_manager.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/xtlm_interfaces/xtlm_axis_mem_manager.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/xtlm_sockets/xtlm_aximm_initiator_socket.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/xtlm_sockets/xtlm_aximm_monitor_socket.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/xtlm_sockets/xtlm_aximm_passthrough_target_socket_tagged.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/xtlm_sockets/xtlm_aximm_simple_initiator_socket_tagged.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/xtlm_sockets/xtlm_aximm_target_socket.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/xtlm_sockets/xtlm_axis_initiator_socket.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/xtlm_sockets/xtlm_axis_monitor_socket.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/xtlm_sockets/xtlm_axis_passthrough_target_socket_tagged.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/xtlm_sockets/xtlm_axis_simple_initiator_socket_tagged.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm/xtlm/src/xtlm_sockets/xtlm_axis_target_socket.cxx 
+Start time: 13:04:30 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:04:30 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
+==============================================================================
+Library 'emu_perf_common_v1_0' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap emu_perf_common_v1_0 /opt/Xilinx/compile_simlib/questasim/emu_perf_common_v1_0 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -nodebug -std=c++11 -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/emu_perf_common/emu_perf_common_v1_0/include -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/emu_perf_common/emu_perf_common_v1_0/src -I /opt/Xilinx/compile_simlib/questasim/xtlm/include -I /opt/Xilinx/compile_simlib/questasim/common_cpp_v1_0/include -O3 -Wall -fPIC -std=gnu++14 -Wno-reorder -Wno-deprecated-declarations -Wno-unused-function -DSC_INCLUDE_DYNAMIC_PROCESSES -DNDEBUG -work emu_perf_common_v1_0 /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/emu_perf_common/emu_perf_common_v1_0/src/emdiagcore.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/emu_perf_common/emu_perf_common_v1_0/src/emulation_profiler_core_base.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/emu_perf_common/emu_perf_common_v1_0/src/perf_utils.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/emu_perf_common/emu_perf_common_v1_0/src/tlm_mem_if_analyzer.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/emu_perf_common/emu_perf_common_v1_0/src/tlm_mem_if_analyzer_impl.cpp 
+Start time: 13:04:30 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:04:30 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
+==============================================================================
+Library 'axi_tlm_ext_v1_0' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap axi_tlm_ext_v1_0 /opt/Xilinx/compile_simlib/questasim/axi_tlm_ext_v1_0 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -nodebug -std=c++14 -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/tlm_ext/axi_tlm_ext_v1_0/include -I /opt/Xilinx/compile_simlib/questasim/xtlm/include -I /opt/Xilinx/compile_simlib/questasim/common_cpp_v1_0/include -O3 -fPIC -DSC_INCLUDE_DYNAMIC_PROCESSES -work axi_tlm_ext_v1_0 /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/tlm_ext/axi_tlm_ext_v1_0/src/TlmExtDef.cxx 
+Start time: 13:04:30 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:04:30 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
+==============================================================================
+Library 'axi_tg_sc_v1_0' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap axi_tg_sc_v1_0 /opt/Xilinx/compile_simlib/questasim/axi_tg_sc_v1_0 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -nodebug -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/axi_tg_sc/axi_tg_sc_v1_0/include -I /opt/Xilinx/compile_simlib/questasim/axi_tlm_ext_v1_0/include -I /opt/Xilinx/compile_simlib/questasim/xtlm/include -I /opt/Xilinx/compile_simlib/questasim/common_cpp_v1_0/include -I /opt/Xilinx/Vivado/2020.2/tps/boost_1_64_0 -O3 -Wall -fPIC -std=gnu++14 -Wno-reorder -Wno-deprecated-declarations -Wno-unused-function -Wno-sign-compare -DSC_INCLUDE_DYNAMIC_PROCESSES -DNDEBUG -O3 -work axi_tg_sc_v1_0 /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/axi_tg_sc/axi_tg_sc_v1_0/src/CsvTrafficReader.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/axi_tg_sc/axi_tg_sc_v1_0/src/TgAxiBase.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/axi_tg_sc/axi_tg_sc_v1_0/src/TgAxiCommon.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/axi_tg_sc/axi_tg_sc_v1_0/src/TgAxiCsv.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/axi_tg_sc/axi_tg_sc_v1_0/src/TgAxiCustomSeq.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/axi_tg_sc/axi_tg_sc_v1_0/src/TgAxiPolicySelect.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/axi_tg_sc/axi_tg_sc_v1_0/src/TgAxiTlm.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/axi_tg_sc/axi_tg_sc_v1_0/src/TgAxiUniform.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/axi_tg_sc/axi_tg_sc_v1_0/src/TgAxiVideo.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/axi_tg_sc/axi_tg_sc_v1_0/src/TgAxiXtlm.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/axi_tg_sc/axi_tg_sc_v1_0/src/TgMemory.cxx 
+Start time: 13:04:30 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:04:30 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
+==============================================================================
+Library 'noc_sc_v1_0_0' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap noc_sc_v1_0_0 /opt/Xilinx/compile_simlib/questasim/noc_sc_v1_0_0 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -nodebug -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/noc_sc/noc_sc_v1_0_0/include -I /opt/Xilinx/Vivado/2020.2/data/simmodels/questa/2020.2/lnx64/5.3.0/systemc/protected/noc_v1_0_0/include -I /opt/Xilinx/compile_simlib/questasim/xtlm/include -I /opt/Xilinx/compile_simlib/questasim/common_cpp_v1_0/include -I /opt/Xilinx/Vivado/2020.2/tps/boost_1_64_0 -O3 -Wall -fPIC -std=gnu++14 -Wno-reorder -Wno-deprecated-declarations -Wno-unused-function -DSC_INCLUDE_DYNAMIC_PROCESSES -DBOOST_SYSTEM_NO_DEPRECATED -DNDEBUG -O3 -work noc_sc_v1_0_0 /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/noc_sc/noc_sc_v1_0_0/src/NOCCoreTlm.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/noc_sc/noc_sc_v1_0_0/src/NOCCoreXtlm.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/noc_sc/noc_sc_v1_0_0/src/NOCDbgScTrace.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/noc_sc/noc_sc_v1_0_0/src/NOCDdrMcXtlm.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/noc_sc/noc_sc_v1_0_0/src/NOCDDRTlm.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/noc_sc/noc_sc_v1_0_0/src/NOCMasterUnitTlm.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/noc_sc/noc_sc_v1_0_0/src/NOCMasterUnitXtlm.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/noc_sc/noc_sc_v1_0_0/src/NOCPktTransportTypes.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/noc_sc/noc_sc_v1_0_0/src/NOCSlaveUnitTlm.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/noc_sc/noc_sc_v1_0_0/src/NOCSlaveUnitXtlm.cxx 
+Start time: 13:04:30 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:04:30 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
+==============================================================================
+Library 'remote_port_sc_v4' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap remote_port_sc_v4 /opt/Xilinx/compile_simlib/questasim/remote_port_sc_v4 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -nodebug -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/remote_port_sc/remote_port_sc_v4/include -I /opt/Xilinx/compile_simlib/questasim/remote_port_c_v4/include -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/remote_port_sc/remote_port_sc_v4/src -I /opt/Xilinx/compile_simlib/questasim/common_cpp_v1_0/include -O3 -fPIC -std=c++11 -DREMOTEPORT_SC_DLL -work remote_port_sc_v4 /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/remote_port_sc/remote_port_sc_v4/src/remote_port_tlm.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/remote_port_sc/remote_port_sc_v4/src/remote_port_tlm_memory_master.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/remote_port_sc/remote_port_sc_v4/src/remote_port_tlm_memory_slave.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/remote_port_sc/remote_port_sc_v4/src/remote_port_tlm_wires.cpp 
+Start time: 13:04:31 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:04:31 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
+==============================================================================
+Library 'pl_fileio_v1_0_0' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap pl_fileio_v1_0_0 /opt/Xilinx/compile_simlib/questasim/pl_fileio_v1_0_0 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -nodebug -std=c++11 -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/pl_fileio/pl_fileio_v1_0_0/include -I /opt/Xilinx/Vivado/2020.2/tps/boost_1_64_0 -O3 -Wall -fPIC -work pl_fileio_v1_0_0 /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/pl_fileio/pl_fileio_v1_0_0/src/pl_packetizer.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/pl_fileio/pl_fileio_v1_0_0/src/pl_packetizer_128bit.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/pl_fileio/pl_fileio_v1_0_0/src/pl_receiver.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/pl_fileio/pl_fileio_v1_0_0/src/pl_receiver_128bit.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/pl_fileio/pl_fileio_v1_0_0/src/pl_sender.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/pl_fileio/pl_fileio_v1_0_0/src/pl_sender_128bit.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/pl_fileio/pl_fileio_v1_0_0/src/uint128.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/pl_fileio/pl_fileio_v1_0_0/src/wrapper.cpp 
+Start time: 13:04:31 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:04:31 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
+==============================================================================
+Library 'xtlm_simple_interconnect_v1_0' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap xtlm_simple_interconnect_v1_0 /opt/Xilinx/compile_simlib/questasim/xtlm_simple_interconnect_v1_0 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -nodebug -std=c++11 -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm_simple_interconnect/xtlm_simple_interconnect_v1_0/include -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm_simple_interconnect/xtlm_simple_interconnect_v1_0/src -I /opt/Xilinx/compile_simlib/questasim/xtlm/include -I /opt/Xilinx/compile_simlib/questasim/common_cpp_v1_0/include -O3 -Wall -fPIC -std=gnu++14 -Wno-reorder -Wno-deprecated-declarations -Wno-unused-function -DSC_INCLUDE_DYNAMIC_PROCESSES -DNDEBUG -work xtlm_simple_interconnect_v1_0 /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm_simple_interconnect/xtlm_simple_interconnect_v1_0/src/xtlm_icn_interface_property.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm_simple_interconnect/xtlm_simple_interconnect_v1_0/src/xtlm_payload_handler_aximm.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm_simple_interconnect/xtlm_simple_interconnect_v1_0/src/xtlm_payload_link.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm_simple_interconnect/xtlm_simple_interconnect_v1_0/src/xtlm_simple_interconnect_model.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm_simple_interconnect/xtlm_simple_interconnect_v1_0/src/xtlm_simple_interconnect_model_impl.cpp 
+Start time: 13:04:31 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:04:31 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
+==============================================================================
+Library 'rwd_tlmmodel_v1' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap rwd_tlmmodel_v1 /opt/Xilinx/compile_simlib/questasim/rwd_tlmmodel_v1 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -nodebug -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/rwd_tlmmodel/rwd_tlmmodel_v1/include -I /opt/Xilinx/compile_simlib/questasim/debug_tcp_server_v1/include/ -O3 -fPIC -std=c++11 -DRWD_TLMMODEL_SC_DLL -work rwd_tlmmodel_v1 /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/rwd_tlmmodel/rwd_tlmmodel_v1/src/rwd_tlmmodel.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/rwd_tlmmodel/rwd_tlmmodel_v1/src/rwd_interface.cpp 
+Start time: 13:04:31 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:04:31 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
+==============================================================================
+Library 'sim_xdma_sc_v1' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap sim_xdma_sc_v1 /opt/Xilinx/compile_simlib/questasim/sim_xdma_sc_v1 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -nodebug -std=c++11 -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/sim_xdma_sc/sim_xdma_sc_v1/include -I /opt/Xilinx/compile_simlib/questasim/common_rpc_v1/include -I /opt/Xilinx/compile_simlib/questasim/xtlm/include -I /opt/Xilinx/compile_simlib/questasim/common_cpp_v1_0/include -I /opt/Xilinx/compile_simlib/questasim/sim_xdma_cpp_v1/include -O3 -Wall -fPIC -DNDEBUG -work sim_xdma_sc_v1 /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/sim_xdma_sc/sim_xdma_sc_v1/src/sim_xdma.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/sim_xdma_sc/sim_xdma_sc_v1/src/sim_xdma_core.cpp 
+Start time: 13:04:43 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:04:43 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
+==============================================================================
+Library 'sim_qdma_sc_v1_0' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap sim_qdma_sc_v1_0 /opt/Xilinx/compile_simlib/questasim/sim_qdma_sc_v1_0 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -nodebug -std=c++11 -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/sim_qdma_sc/sim_qdma_sc_v1_0/include -I /opt/Xilinx/compile_simlib/questasim/common_rpc_v1/include -I /opt/Xilinx/compile_simlib/questasim/xtlm/include -I /opt/Xilinx/compile_simlib/questasim/common_cpp_v1_0/include -I /opt/Xilinx/compile_simlib/questasim/sim_qdma_cpp_v1_0/include -I /opt/Xilinx/Vivado/2020.2/data/simmodels/questa/2020.2/lnx64/5.3.0/ext/protobuf/include -I /opt/Xilinx/Vivado/2020.2/tps/boost_1_64_0 -O3 -Wall -fPIC -DNDEBUG -work sim_qdma_sc_v1_0 /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/sim_qdma_sc/sim_qdma_sc_v1_0/src/sim_qdma_helper.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/sim_qdma_sc/sim_qdma_sc_v1_0/src/sim_qdma.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/sim_qdma_sc/sim_qdma_sc_v1_0/src/sim_qdma_core.cpp 
+Start time: 13:04:44 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:04:44 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
+==============================================================================
+Library 'xtlm_trace_model_v1_0' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap xtlm_trace_model_v1_0 /opt/Xilinx/compile_simlib/questasim/xtlm_trace_model_v1_0 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -nodebug -std=c++11 -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm_trace_model/xtlm_trace_model_v1_0/include -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm_trace_model/xtlm_trace_model_v1_0/src -I /opt/Xilinx/compile_simlib/questasim/xtlm/include -I /opt/Xilinx/compile_simlib/questasim/common_cpp_v1_0/include -O3 -Wall -fPIC -std=gnu++14 -Wno-reorder -Wno-deprecated-declarations -Wno-unused-function -DSC_INCLUDE_DYNAMIC_PROCESSES -DNDEBUG -work xtlm_trace_model_v1_0 /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm_trace_model/xtlm_trace_model_v1_0/src/xtlm_trace_aximm.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm_trace_model/xtlm_trace_model_v1_0/src/xtlm_trace_imp.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm_trace_model/xtlm_trace_model_v1_0/src/xtlm_trace_model.cpp 
+Start time: 13:04:44 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:04:44 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
+==============================================================================
+Library 'aie_xtlm_v1_0_0' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap aie_xtlm_v1_0_0 /opt/Xilinx/compile_simlib/questasim/aie_xtlm_v1_0_0 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -nodebug -DBOOST_SYSTEM_NO_DEPRECATED -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/aie_xtlm/aie_xtlm_v1_0_0/include -I /opt/Xilinx/Vivado/2020.2/data/simmodels/questa/2020.2/lnx64/5.3.0/systemc/protected/aie_cluster_v1_0_0/include -I /opt/Xilinx/compile_simlib/questasim/xtlm/include -I /opt/Xilinx/compile_simlib/questasim/common_cpp_v1_0/include -I /opt/Xilinx/Vivado/2020.2/tps/boost_1_64_0 -O3 -Wall -fPIC -std=gnu++14 -Wno-reorder -Wno-sign-compare -Wno-deprecated-declarations -DUSE_FST -DNO_TCL -DSC_INCLUDE_DYNAMIC_PROCESSES -DNDEBUG -work aie_xtlm_v1_0_0 /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/aie_xtlm/aie_xtlm_v1_0_0/src/aie_axis_bridges.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/aie_xtlm/aie_xtlm_v1_0_0/src/aie_config.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/aie_xtlm/aie_xtlm_v1_0_0/src/aie_handle_sim_config.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/aie_xtlm/aie_xtlm_v1_0_0/src/aie_logger.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/aie_xtlm/aie_xtlm_v1_0_0/src/aie_logical.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/aie_xtlm/aie_xtlm_v1_0_0/src/aie_shim_sol_parser.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/aie_xtlm/aie_xtlm_v1_0_0/src/aie_xtlm.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/aie_xtlm/aie_xtlm_v1_0_0/src/math_engine_globals.cpp 
+Start time: 13:04:44 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:04:44 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
+==============================================================================
+Library 'sim_ddr_v1_0' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap sim_ddr_v1_0 /opt/Xilinx/compile_simlib/questasim/sim_ddr_v1_0 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -nodebug -std=c++11 -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/sim_ddr/sim_ddr_v1_0/include -I /opt/Xilinx/Vivado/2020.2/data/simmodels/questa/2020.2/lnx64/5.3.0/ext/protobuf/include -I /opt/Xilinx/compile_simlib/questasim/common_cpp_v1_0/include -I /opt/Xilinx/compile_simlib/questasim/xtlm/include -O3 -Wall -fPIC -std=gnu++14 -Wno-reorder -Wno-deprecated-declarations -Wno-unused-function -DSC_INCLUDE_DYNAMIC_PROCESSES -work sim_ddr_v1_0 /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/sim_ddr/sim_ddr_v1_0/src/ddr3_axi_ram_fmodel.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/sim_ddr/sim_ddr_v1_0/src/ddr3_fmodel_base.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/sim_ddr/sim_ddr_v1_0/src/ddr3_fmodel_shared_memory.cxx /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/sim_ddr/sim_ddr_v1_0/src/app_ddrx_xtlm.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/sim_ddr/sim_ddr_v1_0/src/axi_app_xtlm.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/sim_ddr/sim_ddr_v1_0/src/fsm_model.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/sim_ddr/sim_ddr_v1_0/src/sim_ddrx.cpp 
+Start time: 13:04:44 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:04:44 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
+==============================================================================
+Library 'xtlm_ipc_v1_0' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap xtlm_ipc_v1_0 /opt/Xilinx/compile_simlib/questasim/xtlm_ipc_v1_0 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -nodebug -std=c++11 -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm_ipc/xtlm_ipc_v1_0/include -I /opt/Xilinx/compile_simlib/questasim/xtlm/include -I /opt/Xilinx/compile_simlib/questasim/common_cpp_v1_0/include -I /opt/Xilinx/Vivado/2020.2/data/simmodels/questa/2020.2/lnx64/5.3.0/ext/protobuf/include -I /opt/Xilinx/Vivado/2020.2/tps/boost_1_64_0 -O3 -Wall -fPIC -work xtlm_ipc_v1_0 /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm_ipc/xtlm_ipc_v1_0/src/ipc_socket.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm_ipc/xtlm_ipc_v1_0/src/ipc_port.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm_ipc/xtlm_ipc_v1_0/src/ipc2axis_socket.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm_ipc/xtlm_ipc_v1_0/src/axis2ipc_socket.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm_ipc/xtlm_ipc_v1_0/src/parser.cpp /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm_ipc/xtlm_ipc_v1_0/src/xtlm_ipc.pb.cc 
+Start time: 13:04:44 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:04:44 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
+==============================================================================
+Library 'xtlm_ap_ctrl_v1_0' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap xtlm_ap_ctrl_v1_0 /opt/Xilinx/compile_simlib/questasim/xtlm_ap_ctrl_v1_0 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -nodebug -DBOOST_SYSTEM_NO_DEPRECATED -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm_ap_ctrl/xtlm_ap_ctrl_v1_0/include -I /opt/Xilinx/compile_simlib/questasim/xtlm/include -I /opt/Xilinx/compile_simlib/questasim/common_cpp_v1_0/include -O3 -Wall -fPIC -std=gnu++14 -Wno-reorder -Wno-sign-compare -Wno-deprecated-declarations -DSC_INCLUDE_DYNAMIC_PROCESSES -DNDEBUG -work xtlm_ap_ctrl_v1_0 /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/xtlm_ap_ctrl/xtlm_ap_ctrl_v1_0/src/xtlm_ap_ctrl.cpp 
+Start time: 13:04:44 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:04:44 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
+==============================================================================
+Library 'axis_switch_sc_v1_1' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap axis_switch_sc_v1_1 /opt/Xilinx/compile_simlib/questasim/axis_switch_sc_v1_1 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -nodebug -std=c++11 -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/axis_switch_sc/axis_switch_sc_v1_1/include -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/axis_switch_sc/axis_switch_sc_v1_1/src -I /opt/Xilinx/compile_simlib/questasim/xtlm/include -I /opt/Xilinx/compile_simlib/questasim/common_cpp_v1_0/include -O3 -Wall -fPIC -std=gnu++14 -g -Wno-reorder -Wno-deprecated-declarations -Wno-unused-function -DSC_INCLUDE_DYNAMIC_PROCESSES -DNDEBUG -work axis_switch_sc_v1_1 /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/axis_switch_sc/axis_switch_sc_v1_1/src/xsc_axis_switch.cpp 
+Start time: 13:04:45 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:04:45 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
+==============================================================================
+Library 'axis_dwidth_converter_sc_v1_1' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap axis_dwidth_converter_sc_v1_1 /opt/Xilinx/compile_simlib/questasim/axis_dwidth_converter_sc_v1_1 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -nodebug -std=c++11 -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/axis_dwidth_converter_sc/axis_dwidth_converter_sc_v1_1/include -I /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/axis_dwidth_converter_sc/axis_dwidth_converter_sc_v1_1/src -I /opt/Xilinx/compile_simlib/questasim/xtlm/include -I /opt/Xilinx/compile_simlib/questasim/common_cpp_v1_0/include -O3 -Wall -fPIC -std=gnu++14 -g -Wno-reorder -Wno-deprecated-declarations -Wno-unused-function -DSC_INCLUDE_DYNAMIC_PROCESSES -DNDEBUG -work axis_dwidth_converter_sc_v1_1 /opt/Xilinx/Vivado/2020.2/data/systemc/simlibs/axis_dwidth_converter_sc/axis_dwidth_converter_sc_v1_1/src/xsc_axis_dwidth_converter.cpp 
+Start time: 13:04:45 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:04:45 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
+==============================================================================
+Library 'processing_system7_v5_5_6' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap processing_system7_v5_5_6 /opt/Xilinx/compile_simlib/questasim/processing_system7_v5_5_6 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -I /home/dn/verilogggg/learn/.cxl.ip/incl -I /opt/Xilinx/compile_simlib/questasim/remote_port_c_v4/include -I /opt/Xilinx/compile_simlib/questasim/remote_port_sc_v4/include -I /opt/Xilinx/compile_simlib/questasim/xtlm/include -work processing_system7_v5_5_6 /opt/Xilinx/Vivado/2020.2/data/ip/xilinx/processing_system7_v5_5/sim_tlm/xilinx-zynq.cc 
+Start time: 13:04:54 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:04:54 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
+==============================================================================
+Library 'zynq_ultra_ps_e_v3_3_3' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap zynq_ultra_ps_e_v3_3_3 /opt/Xilinx/compile_simlib/questasim/zynq_ultra_ps_e_v3_3_3 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -I /home/dn/verilogggg/learn/.cxl.ip/incl -I /opt/Xilinx/compile_simlib/questasim/remote_port_c_v4/include -I /opt/Xilinx/compile_simlib/questasim/remote_port_sc_v4/include -I /opt/Xilinx/compile_simlib/questasim/xtlm/include -work zynq_ultra_ps_e_v3_3_3 /opt/Xilinx/Vivado/2020.2/data/ip/xilinx/zynq_ultra_ps_e_v3_3/sim_tlm/xilinx_zynqmp.cpp 
+Start time: 13:05:14 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:05:14 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
+==============================================================================
+Library 'versal_cips_v2_1_0' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap versal_cips_v2_1_0 /opt/Xilinx/compile_simlib/questasim/versal_cips_v2_1_0 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -I /home/dn/verilogggg/learn/.cxl.ip/incl -I /opt/Xilinx/compile_simlib/questasim/common_cpp_v1_0/include -I /opt/Xilinx/compile_simlib/questasim/common_rpc_v1/include -I /opt/Xilinx/compile_simlib/questasim/debug_tcp_server_v1/include -I /opt/Xilinx/compile_simlib/questasim/protobuf/include -I /opt/Xilinx/compile_simlib/questasim/remote_port_c_v4/include -I /opt/Xilinx/compile_simlib/questasim/remote_port_sc_v4/include -I /opt/Xilinx/compile_simlib/questasim/xtlm/include -I /opt/Xilinx/compile_simlib/questasim/xtlm_simple_interconnect_v1_0/include -I /opt/Xilinx/compile_simlib/questasim/rwd_tlmmodel_v1/include -I /opt/Xilinx/compile_simlib/questasim/sim_qdma_cpp_v1_0/include -I /opt/Xilinx/compile_simlib/questasim/sim_qdma_sc_v1_0/include -I /opt/Xilinx/compile_simlib/questasim/emu_perf_common_v1_0/include -work versal_cips_v2_1_0 /opt/Xilinx/Vivado/2020.2/data/ip/xilinx/versal_cips_v2_1/sim_tlm/xilinx_versal.cpp 
+Start time: 13:05:15 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:05:15 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
+==============================================================================
+Library 'zynq_ultra_ps_e_v3_2_6' compilation error(s)
+==============================================================================
+QuestaSim-64 vmap 10.7c Lib Mapping Utility 2018.08 Aug 17 2018
+vmap zynq_ultra_ps_e_v3_2_6 /opt/Xilinx/compile_simlib/questasim/zynq_ultra_ps_e_v3_2_6 
+Modifying modelsim.ini
+sccom -cpppath /usr/bin/g++ -I /home/dn/verilogggg/learn/.cxl.ip/incl -I /opt/Xilinx/compile_simlib/questasim/remote_port_c_v4/include -I /opt/Xilinx/compile_simlib/questasim/remote_port_sc_v4/include -I /opt/Xilinx/compile_simlib/questasim/xtlm/include -work zynq_ultra_ps_e_v3_2_6 /opt/Xilinx/Vivado/2020.2/data/ip/xilinx/zynq_ultra_ps_e_v3_2/sim_tlm/xilinx_zynqmp.cpp 
+Start time: 13:05:26 on Aug 02,2021
+
+QuestaSim-64 sccom 10.7c compiler 2018.08 Aug 17 2018
+** Error: (sccom-6133) Unsupported C++ compiler g++ version 9. Refer to the QuestaSim releasenotes for a list of supported compilers on the Linux_x86_64 operating system.
+End time: 13:05:26 on Aug 02,2021, Elapsed time: 0:00:00
+Errors: 1, Warnings: 0
+
