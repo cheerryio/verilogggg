@@ -17,15 +17,15 @@
 module ADS1675 #(
     parameter integer DW = 24
 )(
-     input wire aclk,areset_n,en,
+    input wire aclk,areset_n,en,
+    input wire sclk,drdy,dout,
     // configure
-     output wire dr0,dr1,dr2,
-     output wire fpath,ll_cfg,lvds,clk_sel,
+    output wire dr0,dr1,dr2,
+    output wire fpath,ll_cfg,lvds,clk_sel,
     // control
-     output wire cs_n,start,pown,
-     input wire sclk,dout,drdy,
-     output logic signed [DW-1:0] data,
-     output logic valid
+    output wire cs_n,start,pown,
+    output logic signed [DW-1:0] data,
+    output logic valid
 );
     assign dr0    =1'b1;
     assign dr1    =1'b0;
@@ -45,7 +45,7 @@ module ADS1675 #(
 
     always_ff @( posedge aclk ) begin
         if(!areset_n) begin
-            drdy_dly<= '0;
+            drdy_dly<='0;
         end
         else if(en) begin
             drdy_dly<={drdy_dly[0],drdy};
