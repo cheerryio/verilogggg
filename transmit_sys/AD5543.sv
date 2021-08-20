@@ -56,13 +56,16 @@ module AD5543 #(
     end
 
     // drive cs_n
-    always_ff @( posedge aclk or negedge aclk ) begin
+    always_ff @( posedge aclk or posedge aclk_n or negedge areset_n) begin
         if(!areset_n) begin
             cs_n<=1'b1;
         end
         else if(en) begin
-            if(co15) begin
-                cs_n<=aclk;
+            if(aclk_n && co15) begin
+                cs_n<=1'b1;
+            end
+            else if(aclk && co15) begin
+                cs_n<=1'b0;
             end
         end
     end
