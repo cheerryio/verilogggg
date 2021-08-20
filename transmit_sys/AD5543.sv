@@ -57,7 +57,7 @@ module AD5543_96M #(
             clk0<=1'b0;
         end
         else if(en) begin
-            if(co16_dly) begin
+            if(co16 && clk0==1'b1) begin
                 clk0<=clk0;
             end
             else if(cs_n) begin
@@ -93,7 +93,7 @@ module AD5543_96M #(
             if(co24) begin
                 cs_n<=1'b0;
             end
-            else if(co16_dly) begin
+            else if(co16) begin
                 cs_n<=1'b1;
             end
         end
