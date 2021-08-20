@@ -41,7 +41,9 @@ import my_collection_sys_basic_sim_pkg::*;
         aresetn=1'b0;
         #100 aresetn=1'b1;
     end
-
+    assign temp_aclk=aclk;
+    assign temp_aresetn=aresetn;
+    
     assign freq_in=2.0**32*22e3/10e6;
     orthDds #(32, 24, 13) theOrthDdsInst(
         collection_sys_basic_sim_tb.UUT.basic_sim_i.processing_system7_0_FCLK_CLK0,
@@ -50,8 +52,7 @@ import my_collection_sys_basic_sim_pkg::*;
     );
     assign din=cos_in;
     item gen=new;
-    assign temp_aclk=aclk;
-    assign temp_aresetn=aresetn;
+
     basic_sim_wrapper UUT
     (.DDR_addr(),
     .DDR_ba(),
