@@ -31,9 +31,12 @@ module AD5543 #(
     output logic clk,sdi,cs_n
 );
     logic co15;
+    logic co15_1,co15_2;
     logic [DW-1:0] shift_data;
 
-    counter #(DW-1) theCounter15(clk,rst_n,en,co15);
+    counter #(DW-1) theCounter15(aclk,areset_n,en,co15);
+    assign co15_1=aclk & co15;
+    assign co15_2=~aclk & co15;
 
     // drive shift_data
     always_ff @(posedge aclk or negedge aclk ) begin
@@ -41,10 +44,10 @@ module AD5543 #(
             shift_data<='0;
         end
         else if(en) begin
-            if(~aclk && co15) begin
+            if(co15_1) begin
                 shift_data<=data;
             end
-            else if(aclk) begin
+            else if(co15_2) begin
                 shift_data<={shift_data[DW-2:0],1'b0};
             end
         end
