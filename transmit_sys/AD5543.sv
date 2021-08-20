@@ -14,19 +14,11 @@ module AD5543_tb;
     end
     
     logic signed [15:0] sin,cos;
-    orthDds #(32,16,13) theOrthDds_1000Hz_Inst(sclk,reset_n,co24,32'd2147483,32'sd0,sin,cos);
+    orthDds #(32,16,13) theOrthDds_1000Hz_Inst(clk,reset_n,1'b1,32'd21474836,32'sd0,sin,cos);
 
-    /*
-    AD5543_32M theAD5543_32M_tb (
-        aclk,areset_n,1'b1,
-        data,
-        clk,sdi,cs_n
-    );
-    */
     AD5543_96M theAD5543_96M_tb (
         aclk,areset_n,1'b1,
-        data,
-        clk,reset_n,co24，
+        //cos,
         sclk,sdi,cs_n
     );
 endmodule
@@ -35,15 +27,16 @@ module AD5543_96M #(
     parameter integer DW = 16
 )(
     input wire aclk,areset_n,en,
-    input wire [DW-1:0] data,
-    output logic clk,reset_n,co24,
+    //input wire [DW-1:0] data,
     (*mark_debug="true"*) output logic sclk,sdi,cs_n
 );
-    (*mark_debug="true"*) logic clk0;
-    (*mark_debug="true"*) logic areset_n_dly;
+    (*mark_debug="true"*) logic clk,clk0;
+    (*mark_debug="true"*) logic reset_n,areset_n_dly;
     (*mark_debug="true"*) logic co16,co24;
     (*mark_debug="true"*) logic co16_dly;
+    (*mark_debug="true"*) logic signed [DW-1:0] data;
     (*mark_debug="true"*) logic [DW-1:0] shift_data;
+    orthDds #(32,16,13) theOrthDds_1000Hz_Inst(clk,reset_n,1'b1,32'd21474836,32'sd0,data,);
 
     always_ff @( posedge aclk ) begin
         if(!areset_n) begin
