@@ -2,6 +2,7 @@
 
 module AD5543_tb;
     bit aclk,areset_n;
+    bit clk,reset_n,co24;
     bit [15:0] data;
     bit sclk,sdi,cs_n;
 
@@ -11,10 +12,9 @@ module AD5543_tb;
         repeat(5) @(posedge aclk);
         areset_n=1'b1;
     end
-
-    always_ff @( negedge cs_n ) begin
-        data<=$random();
-    end
+    
+    logic signed [15:0] sin,cos;
+    orthDds #(32,16,13) theOrthDds_1000Hz_Inst(sclk,reset_n,co24,32'd2147483,32'sd0,sin,cos);
 
     /*
     AD5543_32M theAD5543_32M_tb (
@@ -26,6 +26,7 @@ module AD5543_tb;
     AD5543_96M theAD5543_96M_tb (
         aclk,areset_n,1'b1,
         data,
+        clk,reset_n,co24，
         sclk,sdi,cs_n
     );
 endmodule
@@ -35,13 +36,14 @@ module AD5543_96M #(
 )(
     input wire aclk,areset_n,en,
     input wire [DW-1:0] data,
-    output logic sclk,sdi,cs_n
+    output logic clk,reset_n,co24,
+    (*mark_debug="true"*) output logic sclk,sdi,cs_n
 );
-    logic clk,clk0;
-    logic areset_n_dly,reset_n;
-    logic co16,co24;
-    logic co16_dly;
-    logic [DW-1:0] shift_data;
+    (*mark_debug="true"*) logic clk0;
+    (*mark_debug="true"*) logic areset_n_dly;
+    (*mark_debug="true"*) logic co16,co24;
+    (*mark_debug="true"*) logic co16_dly;
+    (*mark_debug="true"*) logic [DW-1:0] shift_data;
 
     always_ff @( posedge aclk ) begin
         if(!areset_n) begin
