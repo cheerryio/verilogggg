@@ -30,24 +30,26 @@ module AD5543 #(
     input wire [DW-1:0] data,
     output logic clk,sdi,cs_n
 );
+    logic aclk_n;
     logic co15;
     logic co15_1,co15_2;
     logic [DW-1:0] shift_data;
 
+    assign aclk_n=~aclk;
     counter #(DW-1) theCounter15(aclk,areset_n,en,co15);
     assign co15_1=aclk & co15;
     assign co15_2=~aclk & co15;
 
     // drive shift_data
-    always_ff @(posedge aclk or negedge aclk ) begin
+    always_ff @(posedge aclk or posedge aclk_n or negedge areset_n) begin
         if(!areset_n) begin
             shift_data<='0;
         end
         else if(en) begin
-            if(co15_1) begin
+            if(aclk_n && co15) begin
                 shift_data<=data;
             end
-            else if(co15_2) begin
+            else if(aclk) begin
                 shift_data<={shift_data[DW-2:0],1'b0};
             end
         end
