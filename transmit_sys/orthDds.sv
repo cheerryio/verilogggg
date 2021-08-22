@@ -26,11 +26,13 @@ module orthDds_tb #(
 endmodule
 
 module orthDds #(
-    parameter PW = 32, DW = 12, AW = 13
+    parameter integer PW=32,
+    parameter integer DW=12,
+    parameter integer AW=13
 )(
-    input wire clk, rst_n, en,
-    input wire signed [PW - 1 : 0] freq, phase,
-    output logic signed [DW - 1 : 0] sin, cos
+    input wire clk,rst_n,en,
+    input wire signed [PW-1:0] freq,phase,
+    output logic signed [DW-1:0] sin,cos
 );
     localparam LEN = 2**AW;
     localparam real PI = 3.1415926535897932;
