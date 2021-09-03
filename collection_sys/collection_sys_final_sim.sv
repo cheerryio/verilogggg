@@ -1,5 +1,5 @@
 `timescale 1ns/10ps
-module collection_sys_final_sim();
+module collection_sys_sim();
     localparam integer FIFO_IRQ_THRESHOLD = 32'd512;
     localparam integer FIFO_BASE_ADDR = 32'h43c0_0000;
     localparam integer FIFO_IRQ_ID = 4'b0000;
@@ -37,19 +37,19 @@ module collection_sys_final_sim();
         @(posedge aclk);
 
         repeat(5) @(posedge aclk);
-        collection_sys_final_sim.UUT.basic_i.processing_system7_0.inst.set_stop_on_error(1'b1);
-        collection_sys_final_sim.UUT.basic_i.processing_system7_0.inst.set_debug_level_info(1'b0);
-        collection_sys_final_sim.UUT.basic_i.processing_system7_0.inst.fpga_soft_reset(32'h1);
-        collection_sys_final_sim.UUT.basic_i.processing_system7_0.inst.fpga_soft_reset(32'h0);
+        collection_sys_sim.UUT.collection_i.processing_system7_0.inst.set_stop_on_error(1'b1);
+        collection_sys_sim.UUT.collection_i.processing_system7_0.inst.set_debug_level_info(1'b0);
+        collection_sys_sim.UUT.collection_i.processing_system7_0.inst.fpga_soft_reset(32'h1);
+        collection_sys_sim.UUT.collection_i.processing_system7_0.inst.fpga_soft_reset(32'h0);
         $display("PL reset complete...");
 
         // configure ip axi4l_fifo
         offset_addr=4*8;
         data=2'b01;
-        collection_sys_final_sim.UUT.basic_i.processing_system7_0.inst.write_data(FIFO_BASE_ADDR+offset_addr,4,data,resp);
+        collection_sys_sim.UUT.collection_i.processing_system7_0.inst.write_data(FIFO_BASE_ADDR+offset_addr,4,data,resp);
         offset_addr=4*3;
         data=FIFO_IRQ_THRESHOLD;
-        collection_sys_final_sim.UUT.basic_i.processing_system7_0.inst.write_data(FIFO_BASE_ADDR+offset_addr,4,data,resp);
+        collection_sys_sim.UUT.collection_i.processing_system7_0.inst.write_data(FIFO_BASE_ADDR+offset_addr,4,data,resp);
         $display("config finish...");
         ->config_finish;
     end
@@ -65,9 +65,9 @@ module collection_sys_final_sim();
                 automatic bit [31:0] read_data;
                 automatic bit resp;
                 for(int i=0;i<ROUND;i++) begin
-                    collection_sys_final_sim.UUT.basic_i.processing_system7_0.inst.wait_interrupt(FIFO_IRQ_ID,irq_status);
+                    collection_sys_sim.UUT.collection_i.processing_system7_0.inst.wait_interrupt(FIFO_IRQ_ID,irq_status);
                     for(int i=0;i<FIFO_IRQ_THRESHOLD;i++) begin
-                        collection_sys_final_sim.UUT.basic_i.processing_system7_0.inst.read_data(FIFO_BASE_ADDR,4,read_data,resp);
+                        collection_sys_sim.UUT.collection_i.processing_system7_0.inst.read_data(FIFO_BASE_ADDR,4,read_data,resp);
                         recev_data.push_back(read_data);
                     end
                     $display("finish collecting data, ROUND %d...",i);
@@ -96,7 +96,7 @@ module collection_sys_final_sim();
         end
     end
 
-    ADS1675_32M_SOURCE_2M_SAMPLE_RATE_MODEL theADS1675_32M_SOURCE_2M_SAMPLE_RATE_MODEL_Inst(
+    ADS1675_32M_SOURCE_4M_SAMPLE_RATE_MODEL theADS1675_32M_SOURCE_2M_SAMPLE_RATE_MODEL_Inst(
         aclk,aresetn,1'b1,
         sclk,drdy,dout,
         data_trans
@@ -110,7 +110,7 @@ module collection_sys_final_sim();
     OBUFDS dout_obufds_inst (
         .I(dout),.O(dout_clk_p),.OB(dout_clk_n)
     );
-    basic_wrapper UUT
+    collection_wrapper UUT
     (.DDR_addr(),
     .DDR_ba(),
     .DDR_cas_n(),

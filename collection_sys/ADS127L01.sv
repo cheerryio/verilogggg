@@ -2,10 +2,10 @@ module ADS127L01 #(
 
 )(
     input wire clk,rst_n,en,
-    input wire sck,fsync,din,
+    (*mark_debug="true"*) input wire sck,fsync,din,
     output logic start,pd, // power-down pin
-    output logic [23:0] data,
-    output logic valid,
+    (*mark_debug="true"*) output logic [23:0] data,
+    (*mark_debug="true"*) output logic valid,
     output logic cs_n,dsin,dout
 );
     /**
@@ -29,7 +29,7 @@ module ADS127L01 #(
     end
     // drive data
     always_ff @( posedge fsync ) begin
-       data <= shift_reg[31:8]; 
+       data <= shift_reg[31:8];
     end
     // drive fsync_dly
     always_ff @( posedge clk ) begin

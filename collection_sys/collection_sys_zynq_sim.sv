@@ -1,6 +1,6 @@
 `timescale 1ns/10ps
 
-package my_collection_sys_basic_sim_pkg;
+package my_collection_sys_zynq_sim_pkg;
     class item;
         rand bit [23:0] din;
         rand bit wr_en,rd_en;
@@ -10,16 +10,11 @@ package my_collection_sys_basic_sim_pkg;
     endclass
 endpackage
 
-module collection_sys_basic_sim_tb();
-import my_collection_sys_basic_sim_pkg::*;
+module collection_sys_zynq_sim_tb();
+import my_collection_sys_zynq_sim_pkg::*;
     localparam integer FIFO_IRQ_THRESHOLD = 32'd512;
-    localparam integer FIFOI_BASE_ADDR = 32'h43c0_0000;
-    localparam integer FIFOQ_BASE_ADDR = 32'h43c1_0000;
-    localparam integer FIFO_BASE_ADDR  = 32'h43c2_0000;
-    localparam integer FREQ_GPIO_BASE_ADDR = 32'h4120_0000;
-    localparam integer FIFOI_IRQ_ID = 4'b0000;
-    localparam integer FIFOQ_IRQ_ID = 4'b0001;
-    localparam integer FIFO_IRQ_ID  = 4'b0010;
+    localparam integer FIFO_BASE_ADDR  = 32'h43c0_0000;
+    localparam integer FIFO_IRQ_ID  = 4'b0000;
     bit aclk,aresetn;
     wire temp_aclk,temp_aresetn;
     bit resp;
@@ -36,7 +31,7 @@ import my_collection_sys_basic_sim_pkg::*;
     bit signed [31:0] freq_in;
     bit signed [31:0] datai[$],dataq[$];
 
-    always #50 aclk=~aclk;
+    always #5 aclk=~aclk;
     initial begin
         aresetn=1'b0;
         #100 aresetn=1'b1;
@@ -46,8 +41,8 @@ import my_collection_sys_basic_sim_pkg::*;
     
     assign freq_in=2.0**32*22e3/10e6;
     orthDds #(32, 24, 13) theOrthDdsInst(
-        collection_sys_basic_sim_tb.UUT.basic_sim_i.processing_system7_0_FCLK_CLK0,
-        collection_sys_basic_sim_tb.UUT.basic_sim_i.processing_system7_0_FCLK_RESET0_N,
+        collection_sys_zynq_sim_tb.UUT.basic_sim_i.processing_system7_0_FCLK_CLK0,
+        collection_sys_zynq_sim_tb.UUT.basic_sim_i.processing_system7_0_FCLK_RESET0_N,
         1'b1, freq_in, 32'sd0,sin_in,cos_in
     );
     assign din=cos_in;
@@ -75,48 +70,33 @@ import my_collection_sys_basic_sim_pkg::*;
     .FIXED_IO_ps_clk(temp_aclk),
     .FIXED_IO_ps_porb(temp_aresetn),
     .FIXED_IO_ps_srstb(temp_aresetn),
-    .data_count_i(data_count_i),
-    .data_count_q(data_count_q),
     .din(din),
-    .down_conversion_sys_en(down_conversion_sys_en),
-    .empty_i(empty_i),
-    .empty_q(empty_q),
-    .freq(freq),
-    .full_i(full_i),
-    .full_q(full_q),
-    .intr_i(intr_i),
-    .intr_q(intr_q));
-    
-    // down_conversion_sys en generator
-    counter #(20) cnt512000(
-        collection_sys_basic_sim_tb.UUT.basic_sim_i.processing_system7_0_FCLK_CLK0,
-        collection_sys_basic_sim_tb.UUT.basic_sim_i.processing_system7_0_FCLK_RESET0_N,
-        1'b1,down_conversion_sys_en
+    .freq(freq)
     );
 
     event config_finish;
     initial begin
         repeat(5) @(posedge aclk);
         // Initialize
-        collection_sys_basic_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.set_stop_on_error(1'b1);
-        collection_sys_basic_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.set_debug_level_info(1'b1);
-        collection_sys_basic_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.fpga_soft_reset(32'h1);
-        collection_sys_basic_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.fpga_soft_reset(32'h0);
+        collection_sys_zynq_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.set_stop_on_error(1'b1);
+        collection_sys_zynq_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.set_debug_level_info(1'b1);
+        collection_sys_zynq_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.fpga_soft_reset(32'h1);
+        collection_sys_zynq_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.fpga_soft_reset(32'h0);
         // configure down_conversion_sys dds freq
         offset_addr=0;
         data=32'h0a00_0000;
-        collection_sys_basic_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.write_data(FREQ_GPIO_BASE_ADDR+offset_addr,4,data,resp);
+        collection_sys_zynq_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.write_data(FREQ_GPIO_BASE_ADDR+offset_addr,4,data,resp);
         // configure ip axi4l_fifo
         offset_addr=4*8;
         data=2'b01;
-        collection_sys_basic_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.write_data(FIFOI_BASE_ADDR+offset_addr,4,data,resp);
-        collection_sys_basic_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.write_data(FIFOQ_BASE_ADDR+offset_addr,4,data,resp);
-        collection_sys_basic_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.write_data(FIFO_BASE_ADDR+offset_addr,4,data,resp);
+        collection_sys_zynq_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.write_data(FIFOI_BASE_ADDR+offset_addr,4,data,resp);
+        collection_sys_zynq_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.write_data(FIFOQ_BASE_ADDR+offset_addr,4,data,resp);
+        collection_sys_zynq_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.write_data(FIFO_BASE_ADDR+offset_addr,4,data,resp);
         offset_addr=4*3;
         data=FIFO_IRQ_THRESHOLD;
-        collection_sys_basic_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.write_data(FIFOI_BASE_ADDR+offset_addr,4,data,resp);
-        collection_sys_basic_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.write_data(FIFOQ_BASE_ADDR+offset_addr,4,data,resp);
-        collection_sys_basic_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.write_data(FIFO_BASE_ADDR+offset_addr,4,data,resp);
+        collection_sys_zynq_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.write_data(FIFOI_BASE_ADDR+offset_addr,4,data,resp);
+        collection_sys_zynq_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.write_data(FIFOQ_BASE_ADDR+offset_addr,4,data,resp);
+        collection_sys_zynq_sim_tb.UUT.basic_sim_i.processing_system7_0.inst.write_data(FIFO_BASE_ADDR+offset_addr,4,data,resp);
         $display("config finish...");
         ->config_finish;
     end
