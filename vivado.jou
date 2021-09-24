@@ -1,0 +1,52 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Fri Sep  3 16:15:05 2021
+# Process ID: 1093557
+# Current directory: /home/dn/verilogggg
+# Command line: vivado
+# Log file: /home/dn/verilogggg/vivado.log
+# Journal file: /home/dn/verilogggg/vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project /home/dn/share/ads1675_data_caped_by_ila_loywong/ads1675_overip.xpr/ads1675_overip/ads1675_overip.xpr
+open_hw_manager
+connect_hw_server -allow_non_jtag
+open_hw_target
+set_property PROGRAM.FILE {/home/dn/share/ads1675_data_caped_by_ila_loywong/ads1675_overip.xpr/ads1675_overip/ads1675_overip.runs/impl_1/design_1_wrapper.bit} [get_hw_devices xc7z100_1]
+set_property PROBES.FILE {/home/dn/share/ads1675_data_caped_by_ila_loywong/ads1675_overip.xpr/ads1675_overip/ads1675_overip.runs/impl_1/design_1_wrapper.ltx} [get_hw_devices xc7z100_1]
+set_property FULL_PROBES.FILE {/home/dn/share/ads1675_data_caped_by_ila_loywong/ads1675_overip.xpr/ads1675_overip/ads1675_overip.runs/impl_1/design_1_wrapper.ltx} [get_hw_devices xc7z100_1]
+current_hw_device [get_hw_devices xc7z100_1]
+refresh_hw_device [lindex [get_hw_devices xc7z100_1] 0]
+set_property PROBES.FILE {/home/dn/share/ads1675_data_caped_by_ila_loywong/ads1675_overip.xpr/ads1675_overip/ads1675_overip.runs/impl_1/design_1_wrapper.ltx} [get_hw_devices xc7z100_1]
+set_property FULL_PROBES.FILE {/home/dn/share/ads1675_data_caped_by_ila_loywong/ads1675_overip.xpr/ads1675_overip/ads1675_overip.runs/impl_1/design_1_wrapper.ltx} [get_hw_devices xc7z100_1]
+set_property PROGRAM.FILE {/home/dn/share/ads1675_data_caped_by_ila_loywong/ads1675_overip.xpr/ads1675_overip/ads1675_overip.runs/impl_1/design_1_wrapper.bit} [get_hw_devices xc7z100_1]
+program_hw_devices [get_hw_devices xc7z100_1]
+refresh_hw_device [lindex [get_hw_devices xc7z100_1] 0]
+update_compile_order -fileset sources_1
+set_property PROBES.FILE {/home/dn/share/ads1675_data_caped_by_ila_loywong/ads1675_overip.xpr/ads1675_overip/ads1675_overip.runs/impl_1/design_1_wrapper.ltx} [get_hw_devices xc7z100_1]
+set_property FULL_PROBES.FILE {/home/dn/share/ads1675_data_caped_by_ila_loywong/ads1675_overip.xpr/ads1675_overip/ads1675_overip.runs/impl_1/design_1_wrapper.ltx} [get_hw_devices xc7z100_1]
+set_property PROGRAM.FILE {/home/dn/share/ads1675_data_caped_by_ila_loywong/ads1675_overip.xpr/ads1675_overip/ads1675_overip.runs/impl_1/design_1_wrapper.bit} [get_hw_devices xc7z100_1]
+program_hw_devices [get_hw_devices xc7z100_1]
+refresh_hw_device [lindex [get_hw_devices xc7z100_1] 0]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_1 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7z100_1] -filter {CELL_NAME=~"u_ila_0"}]]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_2 -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7z100_1] -filter {CELL_NAME=~"u_ila_1"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z100_1] -filter {CELL_NAME=~"u_ila_0"}] -trigger_now
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z100_1] -filter {CELL_NAME=~"u_ila_0"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z100_1] -filter {CELL_NAME=~"u_ila_0"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z100_1] -filter {CELL_NAME=~"u_ila_0"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z100_1] -filter {CELL_NAME=~"u_ila_0"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z100_1] -filter {CELL_NAME=~"u_ila_0"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z100_1] -filter {CELL_NAME=~"u_ila_1"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z100_1] -filter {CELL_NAME=~"u_ila_1"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z100_1] -filter {CELL_NAME=~"u_ila_1"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z100_1] -filter {CELL_NAME=~"u_ila_0"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z100_1] -filter {CELL_NAME=~"u_ila_0"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z100_1] -filter {CELL_NAME=~"u_ila_0"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z100_1] -filter {CELL_NAME=~"u_ila_0"}] -trigger_now
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z100_1] -filter {CELL_NAME=~"u_ila_0"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z100_1] -filter {CELL_NAME=~"u_ila_0"}]]
+open_bd_design {/home/dn/share/ads1675_data_caped_by_ila_loywong/ads1675_overip.xpr/ads1675_overip/ads1675_overip.srcs/sources_1/bd/design_1/design_1.bd}
+save_wave_config {/home/dn/share/ads1675_data_caped_by_ila_loywong/ads1675_overip.xpr/ads1675_overip/ads1675_overip.hw/hw_1/wave/hw_ila_data_1/hw_ila_data_1.wcfg}
+save_wave_config {/home/dn/share/ads1675_data_caped_by_ila_loywong/ads1675_overip.xpr/ads1675_overip/ads1675_overip.hw/hw_1/wave/hw_ila_data_2/hw_ila_data_2.wcfg}

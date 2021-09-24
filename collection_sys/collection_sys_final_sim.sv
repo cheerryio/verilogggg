@@ -1,21 +1,23 @@
 `timescale 1ns/10ps
 module collection_sys_sim();
-    localparam integer FIFO_IRQ_THRESHOLD = 32'd512;
+    localparam integer FIFO_IRQ_THRESHOLD = 32'd300;
     localparam integer FIFO_BASE_ADDR = 32'h43c0_0000;
     localparam integer FIFO_IRQ_ID = 4'b0000;
+    localparam integer ADC_ENABLE_GPIO_BASEADDR = 32'h4120_0000;
     localparam integer ROUND = 50;
 
     bit aclk,aresetn;
     wire temp_aclk,temp_aresetn;
 
     bit sclk,drdy,dout;
-    bit sclk_clk_p,sclk_clk_n;
-    bit drdy_clk_p,drdy_clk_n;
-    bit dout_clk_p,dout_clk_n;
+    bit sclk_p,sclk_n;
+    bit drdy_p,drdy_n;
+    bit dout_p,dout_n;
 
-    bit signed [23:0] goden_data[$]={24'd0};
-    bit signed [23:0] recev_data[$];
-    bit signed [23:0] data_trans,data_recv;
+    bit signed [31:0] goden_data[$]={};
+    bit signed [31:0] recev_data[$];
+    bit signed [23:0] data_trans;
+    bit signed [31:0] data_recv;
 
     bit [31:0] read_data;
     bit [31:0] addr,offset_addr;
@@ -58,12 +60,13 @@ module collection_sys_sim();
      * simulate 
      */
     initial begin
+        automatic bit resp;
         @(config_finish);
+        collection_sys_sim.UUT.collection_i.processing_system7_0.inst.write_data(ADC_ENABLE_GPIO_BASEADDR,4,1'b1,resp);
         fork
             begin
                 automatic bit [15:0] irq_status;
                 automatic bit [31:0] read_data;
-                automatic bit resp;
                 for(int i=0;i<ROUND;i++) begin
                     collection_sys_sim.UUT.collection_i.processing_system7_0.inst.wait_interrupt(FIFO_IRQ_ID,irq_status);
                     for(int i=0;i<FIFO_IRQ_THRESHOLD;i++) begin
@@ -79,7 +82,7 @@ module collection_sys_sim();
         $finish;
     end
     initial begin
-        automatic bit signed [23:0] a,b;
+        automatic bit signed [31:0] a,b;
         forever begin
             wait(goden_data.size()!=0 && recev_data.size()!=0);
             a=goden_data.pop_front();
@@ -92,23 +95,23 @@ module collection_sys_sim();
         forever begin
             @(negedge drdy);
             data_trans=$random();
-            goden_data.push_back(data_trans);
+            goden_data.push_back({{8{data_trans[23]}},data_trans});
         end
     end
 
-    ADS1675_32M_SOURCE_4M_SAMPLE_RATE_MODEL theADS1675_32M_SOURCE_2M_SAMPLE_RATE_MODEL_Inst(
+    ADS1675_32M_SOURCE_2M_SAMPLE_RATE_MODEL theADS1675_32M_SOURCE_2M_SAMPLE_RATE_MODEL_Inst(
         aclk,aresetn,1'b1,
         sclk,drdy,dout,
         data_trans
     );
     OBUFDS sclk_obufds_inst (
-        .I(sclk),.O(sclk_clk_p),.OB(sclk_clk_n)
+        .I(sclk),.O(sclk_p),.OB(sclk_n)
     );
     OBUFDS drdy_obufds_inst (
-        .I(drdy),.O(drdy_clk_p),.OB(drdy_clk_n)
+        .I(drdy),.O(drdy_p),.OB(drdy_n)
     );
     OBUFDS dout_obufds_inst (
-        .I(dout),.O(dout_clk_p),.OB(dout_clk_n)
+        .I(dout),.O(dout_p),.OB(dout_n)
     );
     collection_wrapper UUT
     (.DDR_addr(),
@@ -134,8 +137,8 @@ module collection_sys_sim();
     .FIXED_IO_ps_srstb(temp_aresetn),
     .clk_sel(),
     .cs_n(),
-    .dout_clk_n(dout_clk_n),
-    .dout_clk_p(dout_clk_p),
+    .dout_n(dout_n),
+    .dout_p(dout_p),
     .dr0(),
     .dr1(),
     .dr2(),
@@ -143,9 +146,9 @@ module collection_sys_sim();
     .ll_cfg(),
     .lvds(),
     .pown(),
-    .drdy_clk_n(drdy_clk_n),
-    .drdy_clk_p(drdy_clk_p),
-    .sclk_clk_n(sclk_clk_n),
-    .sclk_clk_p(sclk_clk_p),
+    .drdy_n(drdy_n),
+    .drdy_p(drdy_p),
+    .sclk_n(sclk_n),
+    .sclk_p(sclk_p),
     .start());
 endmodule

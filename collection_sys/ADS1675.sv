@@ -210,8 +210,8 @@ module ADS1675_SOURCE_16M_2M_SAMPLE_RATE #(
     assign clk_sel=1'b0;
     // OPTIONAL CONFIGURE END
     assign cs_n   =1'b0;
-    assign start  =1'b1;
     assign pown   =1'b1;
+    assign start  =en;
 
     (*mark_debug="true"*) logic [DW-1:0] shift_data;
     (*mark_debug="true"*) logic [1:0] drdy_dly;
@@ -221,26 +221,51 @@ module ADS1675_SOURCE_16M_2M_SAMPLE_RATE #(
         dout_r<=dout;
     end
     always_ff @( posedge sclk ) begin
-        if(!areset_n) shift_data <= '0;
-        else          shift_data <= {shift_data[0+:DW-1], dout_r};
+        if(!areset_n) begin
+            shift_data <= '0;
+        end
+        else if(en) begin
+            shift_data <= {shift_data[0+:DW-1], dout_r};
+        end
     end
     (*mark_debug="true"*) wire drdy_rising=drdy_dly==2'b01;
     always_ff @( posedge sclk ) begin
-        if(!areset_n)         data <= '0;
-        else if(drdy_rising) data <= shift_data[DW-1-:24];
+        if(!areset_n) begin 
+            data <= '0;
+        end
+        else if(en) begin
+            if(drdy_rising) begin 
+                data <= shift_data[DW-1-:24];
+            end
+        end
     end
     always_ff @( posedge sclk ) begin
-        if(!areset_n)         valid <= 1'b0;
-        else if(drdy_rising) valid <= 1'b1;
-        else                 valid <= 1'b0;
+        if(!areset_n) begin 
+            valid <= 1'b0;
+        end
+        else if(en) begin
+            if(drdy_rising) begin 
+                valid <= 1'b1;
+            end
+            else begin
+                valid <= 1'b0;
+            end
+        end
     end
 endmodule
 
 module ADS1675_SOURCE_32M_2M_SAMPLE_RATE #(
-    parameter integer DW = 24
+    parameter integer DW = 24,
+    parameter string DIFF_TERM="TRUE"
 )(
-    input wire aclk,areset_n,en,
-    (*mark_debug="true"*) input wire sclk,drdy,dout,
+    (*dont_touch="yes",iob="true"*) input wire sclk_p,
+    (*dont_touch="yes",iob="true"*) input wire sclk_n,
+    (*dont_touch="yes",iob="true"*) input wire drdy_p,
+    (*dont_touch="yes",iob="true"*) input wire drdy_n,
+    (*dont_touch="yes",iob="true"*) input wire dout_p,
+    (*dont_touch="yes",iob="true"*) input wire dout_n,
+    output wire sclk,
+    input wire areset_n,en,
     // configure
     output wire dr0,dr1,dr2,
     output wire fpath,ll_cfg,lvds,clk_sel,
@@ -249,7 +274,11 @@ module ADS1675_SOURCE_32M_2M_SAMPLE_RATE #(
     (*mark_debug="true"*) output logic signed [DW-1:0] data,
     (*mark_debug="true"*) output logic valid
 );
-
+    wire drdy;
+    wire dout;
+    IBUFGDS #(.DIFF_TERM("TRUE"), .IBUF_LOW_PWR("TRUE"), .IOSTANDARD("LVDS_25")) sclk_buf (.O(sclk), .I(sclk_p), .IB(sclk_n));
+    IBUFDS  #(.DIFF_TERM("TRUE"), .IBUF_LOW_PWR("TRUE"), .IOSTANDARD("LVDS_25")) drdy_buf (.O(drdy), .I(drdy_p), .IB(drdy_n));
+    IBUFDS  #(.DIFF_TERM("TRUE"), .IBUF_LOW_PWR("TRUE"), .IOSTANDARD("LVDS_25")) din_buf  (.O(dout ), .I(dout_p), .IB(dout_n));
     assign dr0    =1'b0;
     assign dr1    =1'b0;
     assign dr2    =1'b1;
@@ -304,48 +333,94 @@ module ADS1675_SOURCE_32M_2M_SAMPLE_RATE #(
             end
         end
     end
+    always_ff @( negedge sclk ) begin
+        if(!areset_n) begin
+            valid<='0;
+        end
+        else if(en) begin
+            valid<=co24;
+        end
+    end
+endmodule
 
-    // co24信号 从sclk跨时钟域到aclk，快到慢
-    logic signala,signalb;
-    logic [1:0] shift_a,shift_b;
-    always_ff @( negedge sclk ) begin
+module ADS1675_SOURCE_32M_2M_SAMPLE_RATE2 #(
+    parameter integer DW=24,
+    parameter integer SDW=48,
+    parameter string DIFF_TERM="TRUE"
+)(
+    (*dont_touch="yes",iob="true"*) input wire sclk_p,
+    (*dont_touch="yes",iob="true"*) input wire sclk_n,
+    (*dont_touch="yes",iob="true"*) input wire drdy_p,
+    (*dont_touch="yes",iob="true"*) input wire drdy_n,
+    (*dont_touch="yes",iob="true"*) input wire dout_p,
+    (*dont_touch="yes",iob="true"*) input wire dout_n,
+    output wire sclk,
+    input wire areset_n,en,
+    // configure
+    output wire dr0,dr1,dr2,
+    output wire fpath,ll_cfg,lvds,clk_sel,
+    // control
+    output wire cs_n,start,pown,
+    (*mark_debug="true"*) output logic signed [DW-1:0] data,
+    (*mark_debug="true"*) output logic valid
+);
+    wire drdy;
+    wire dout;
+    IBUFGDS #(.DIFF_TERM("TRUE"), .IBUF_LOW_PWR("TRUE"), .IOSTANDARD("LVDS_25")) sclk_buf (.O(sclk), .I(sclk_p), .IB(sclk_n));
+    IBUFDS  #(.DIFF_TERM("TRUE"), .IBUF_LOW_PWR("TRUE"), .IOSTANDARD("LVDS_25")) drdy_buf (.O(drdy), .I(drdy_p), .IB(drdy_n));
+    IBUFDS  #(.DIFF_TERM("TRUE"), .IBUF_LOW_PWR("TRUE"), .IOSTANDARD("LVDS_25")) din_buf  (.O(dout ), .I(dout_p), .IB(dout_n));
+    assign dr0    =1'b0;
+    assign dr1    =1'b0;
+    assign dr2    =1'b1;
+    assign fpath  =1'b0;
+    assign ll_cfg =1'b1;
+    // OPTIONAL CONFIGURE START
+    assign lvds   =1'b0;
+    assign clk_sel=1'b0;
+    // OPTIONAL CONFIGURE END
+    assign cs_n   =1'b0;
+    assign pown   =1'b1;
+    assign start  =en;
+
+    (*mark_debug="true"*) logic [SDW-1:0] shift_data;
+    (*mark_debug="true"*) logic [1:0] drdy_dly;
+    (*mark_debug="true"*) logic dout_r;
+    always_ff @( posedge sclk ) begin
+        drdy_dly<={drdy_dly[0],drdy};
+        dout_r<=dout;
+    end
+    always_ff @( posedge sclk ) begin
         if(!areset_n) begin
-            signala<=1'b0;
+            shift_data <= '0;
         end
         else if(en) begin
-            if(co24) begin
-                signala<=1'b1;
+            shift_data <= {shift_data[0+:SDW-1], dout_r};
+        end
+    end
+    (*mark_debug="true"*) wire drdy_rising=drdy_dly==2'b01;
+    always_ff @( posedge sclk ) begin
+        if(!areset_n) begin 
+            data <= '0;
+        end
+        else if(en) begin
+            if(drdy_rising) begin 
+                data <= shift_data[SDW-1-:DW];
             end
-            else if(shift_b[1]) begin
-                signala<=1'b0;
+        end
+    end
+    always_ff @( posedge sclk ) begin
+        if(!areset_n) begin 
+            valid <= 1'b0;
+        end
+        else if(en) begin
+            if(drdy_rising) begin 
+                valid <= 1'b1;
+            end
+            else begin
+                valid <= 1'b0;
             end
         end
     end
-    always_ff @( posedge aclk ) begin
-        if(!areset_n) begin
-            signalb<=1'b0;
-        end
-        else if(en) begin
-            signalb<=signala;
-        end
-    end
-    always_ff @( posedge aclk ) begin
-        if(!areset_n) begin
-            shift_b<='0;
-        end
-        else if(en) begin
-            shift_b<={shift_b[0],signalb};
-        end
-    end
-    always_ff @( negedge sclk ) begin
-        if(!areset_n) begin
-            shift_a<='0;
-        end
-        else if(en) begin
-            shift_a<={shift_a[0],signalb};
-        end
-    end
-    assign valid=~shift_b[1]&shift_b[0];
 endmodule
 
 module ADS1675_2M_SAMPLE_RATE2_RISING #(

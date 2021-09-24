@@ -1,0 +1,161 @@
+`timescale 100ns/10ns
+
+package My_pkg;
+    class MyValid;
+        rand bit valid;
+        constraint my_valid_constraint {valid dist{0:=5,1:=95};}
+    endclass
+endpackage
+
+interface axi_stream #(
+    parameter integer DW=24
+)(
+    input wire s_axis_aclk,s_axis_aresetn
+);
+    logic valid;
+    logic ready;
+    logic signed [DW-1:0] data;
+endinterface
+
+module down_sample_tb;
+import My_pkg::*;
+    bit clk,rst_n;
+    bit signed [23:0] cos;
+    bit signed [19:0] cos1,cos2,cos3;
+    MyValid v;
+    initial begin
+        forever #5 clk=~clk;
+    end
+    initial begin
+        rst_n=1'b0;
+        #50;
+        rst_n=1'b1;
+    end
+    initial begin
+        v=new;
+        #25;
+        @(posedge clk);
+        forever begin
+            @(posedge clk);
+            v.randomize();
+        end
+    end
+    axi_stream #(24) adc_if(clk,rst_n),v_if(clk,rst_n);
+    always_ff @( posedge clk ) begin
+        adc_if.valid<=v.valid;
+        v_if.ready<=1'b1;
+    end
+    //orthDds #(32,24,13) theOrthDdsInst(clk,rst_n,adc_if.valid&adc_if.ready,32'd429496729,32'd0,,cos);
+    orthDds #(32,20,13) theOrthDdsInst_10000Hz(clk,rst_n,adc_if.valid&adc_if.ready,32'd429496729,32'd0,,cos1);  ///< 10000Hz
+    orthDds #(32,20,13) theOrthDdsInst_1000Hz(clk,rst_n,adc_if.valid&adc_if.ready,32'd42949672,32'd0,,cos2);   ///< 1000Hz
+    orthDds #(32,20,13) theOrthDdsInst_100Hz(clk,rst_n,adc_if.valid&adc_if.ready,32'd4294967,32'd0,,cos3);    ///< 100Hz
+    always_ff @( posedge clk ) begin
+        if(adc_if.valid&&adc_if.ready) begin
+            cos<=cos1+cos2+cos3;
+        end
+    end
+    down_sample #(24) the_down_sample_Inst(
+        clk,rst_n,
+        adc_if.valid,adc_if.ready,
+        cos,
+        v_if.valid,v_if.ready,
+        v_if.data
+    );
+    /*
+    cic_deci_stream #(24,4,1,4) the_cic_deci_stream_Inst(
+        clk,rst_n,
+        adc_if.valid,adc_if.ready,cos,
+        v_if.valid,v_if.ready,v_if.data
+    );
+    */
+endmodule
+
+module down_sample #(
+    parameter integer DW=24
+)(
+    input wire s_axis_aclk,s_axis_aresetn,
+    input wire s_axis_tvalid,
+    output logic s_axis_tready,
+    input wire [DW-1:0] s_axis_tdata,
+
+    output logic m_axis_tvalid,
+    input wire m_axis_tready,
+    output logic [DW-1:0] m_axis_tdata
+);
+    logic signed [DW-1:0] data1,data2,data3,data4;
+    axi_stream #(
+        .DW(24)
+    )cic_fir1_if(s_axis_aclk,s_axis_aresetn),fir1_fir2_if(s_axis_aclk,s_axis_aresetn),
+    fir2_fir3_if(s_axis_aclk,s_axis_aresetn),fir3_fir4_if(s_axis_aclk,s_axis_aresetn);
+    cic_deci_stream #(DW,125,1,4) the_cic_deci_stream_Inst(
+        s_axis_aclk,s_axis_aresetn,
+        s_axis_tvalid,s_axis_tready,
+        s_axis_tdata,
+        cic_fir1_if.valid,cic_fir1_if.ready,
+        cic_fir1_if.data
+    );
+    // window kaiser beta=8 fs=4096 fc=1024 order=12
+    fir_deci_stream #(DW,
+    13,'{
+        0.0,0.00243079,0.0,-0.03915077,0.0,0.28671006,
+        0.50001983,
+        0.28671006,0.0,-0.03915077,0.0,0.00243079,0.0
+        },2)fir1(
+            s_axis_aclk,s_axis_aresetn,
+            cic_fir1_if.valid,cic_fir1_if.ready,
+            cic_fir1_if.data,
+            fir1_fir2_if.valid,fir1_fir2_if.ready,
+            fir1_fir2_if.data
+    );
+    // window kaiser beta=8 fs=2048 fc=512 order=18
+    fir_deci_stream #(DW,
+    19,'{
+        0.00008272,0.0,-0.00297138,0.0,
+        0.01820091,0.0,-0.06923229,0.0,0.30391226,
+        0.50001558,
+        0.30391226,0.0,-0.06923229,0.0,0.01820091,
+        0.0,-0.00297138,0.0,0.00008272
+        },2)fir2(
+            s_axis_aclk,s_axis_aresetn,
+            fir1_fir2_if.valid,fir1_fir2_if.ready,
+            fir1_fir2_if.data,
+            fir2_fir3_if.valid,fir2_fir3_if.ready,
+            fir2_fir3_if.data
+    );
+    // window kaiser beta=8 fs=1024 fc=256 order=12
+    fir_deci_stream #(DW,
+    27,'{
+        0.00005726,0.0,-0.00096161,0.0,
+        0.00452250,0.0,-0.01411732,0.0,
+        0.03586591,0.0,-0.08672204,0.0,0.31134482,
+        0.50002094,
+        0.31134482,0.0,-0.08672204,0.0,0.03586591,
+        0.0,-0.01411732,0.0,0.00452250,
+        0.0,-0.00096161,0.0,0.00005726
+        },2)fir3(
+            s_axis_aclk,s_axis_aresetn,
+            fir2_fir3_if.valid,fir2_fir3_if.ready,
+            fir2_fir3_if.data,
+            fir3_fir4_if.valid,fir3_fir4_if.ready,
+            fir3_fir4_if.data
+    );
+    // equiriple Density factor=20 fs=512 fpass=150 fstop=200 order=31
+    fir_deci_stream #(DW,
+    32,'{
+        -0.00294735,-0.00537131,0.00316313,0.00365788,
+        -0.00963999,0.00472148,0.01102961,-0.02079470,
+        0.00617741,0.02699597,-0.04296176,0.00725225,
+        0.06787134,-0.10892211,0.00781940,
+        0.54633122,0.54633122,
+        0.00781940,-0.10892211,0.06787134,
+        0.00725225,-0.04296176,0.02699597,0.00617741,
+        -0.02079470,0.01102961,0.00472148,-0.00963999,
+        0.00365788,0.00316313,-0.00537131,-0.00294735
+        },1)fir4(
+            s_axis_aclk,s_axis_aresetn,
+            fir3_fir4_if.valid,fir3_fir4_if.ready,
+            fir3_fir4_if.data,
+            m_axis_tvalid,m_axis_tready,
+            m_axis_tdata
+    );
+endmodule
