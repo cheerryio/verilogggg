@@ -1,5 +1,5 @@
 `timescale 100ns/10ns
-`include "down_sample.sv"
+`include "common.sv"
 
 module fir_deci_stream_tb;
 import My_pkg::*;
@@ -87,3 +87,4 @@ module fir_deci_stream #(
     end
     assign s_axis_tready=~(m_axis_tvalid&~m_axis_tready);
 endmodule
+

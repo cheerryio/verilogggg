@@ -1,11 +1,6 @@
 `timescale 100ns/10ns
 
-package My_pkg;
-    class MyValid;
-        rand bit valid;
-        constraint my_valid_constraint {valid dist{0:=5,1:=95};}
-    endclass
-endpackage
+`include "common.sv"
 
 interface axi_stream #(
     parameter integer DW=24
