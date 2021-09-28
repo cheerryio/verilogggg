@@ -364,8 +364,8 @@ module ADS1675_SOURCE_32M_2M_SAMPLE_RATE2 #(
     (*mark_debug="true"*) output logic signed [DW-1:0] data,
     (*mark_debug="true"*) output logic valid
 );
-    wire drdy;
-    wire dout;
+    (*mark_debug="true"*) wire drdy;
+    (*mark_debug="true"*) wire dout;
     IBUFGDS #(.DIFF_TERM("TRUE"), .IBUF_LOW_PWR("TRUE"), .IOSTANDARD("LVDS_25")) sclk_buf (.O(sclk), .I(sclk_p), .IB(sclk_n));
     IBUFDS  #(.DIFF_TERM("TRUE"), .IBUF_LOW_PWR("TRUE"), .IOSTANDARD("LVDS_25")) drdy_buf (.O(drdy), .I(drdy_p), .IB(drdy_n));
     IBUFDS  #(.DIFF_TERM("TRUE"), .IBUF_LOW_PWR("TRUE"), .IOSTANDARD("LVDS_25")) din_buf  (.O(dout ), .I(dout_p), .IB(dout_n));
@@ -397,13 +397,13 @@ module ADS1675_SOURCE_32M_2M_SAMPLE_RATE2 #(
             shift_data <= {shift_data[0+:SDW-1], dout_r};
         end
     end
-    (*mark_debug="true"*) wire drdy_rising=drdy_dly==2'b01;
+    wire drdy_rising=drdy_dly==2'b01;
     always_ff @( posedge sclk ) begin
         if(!areset_n) begin 
             data <= '0;
         end
         else if(en) begin
-            if(drdy_rising) begin 
+            if(drdy_rising) begin
                 data <= shift_data[SDW-1-:DW];
             end
         end

@@ -14,6 +14,7 @@ interface axi_stream #(
 );
     logic valid;
     logic ready;
+    logic last;
     logic signed [DW-1:0] data;
 endinterface
 
@@ -59,6 +60,7 @@ import My_pkg::*;
         adc_if.valid,adc_if.ready,
         cos,
         v_if.valid,v_if.ready,
+        v_if.last,
         v_if.data
     );
     /*
@@ -71,24 +73,26 @@ import My_pkg::*;
 endmodule
 
 module down_sample #(
-    parameter integer DW=24
+    parameter integer DW=24,
+    parameter integer LAST=16000
 )(
-    input wire s_axis_aclk,s_axis_aresetn,
+    input wire clk,rst_n,
     input wire s_axis_tvalid,
     output logic s_axis_tready,
     input wire [DW-1:0] s_axis_tdata,
 
     output logic m_axis_tvalid,
     input wire m_axis_tready,
+    output logic m_axis_tlast,
     output logic [DW-1:0] m_axis_tdata
 );
-    logic signed [DW-1:0] data1,data2,data3,data4;
+    logic [$clog2(LAST)-1:0] last_cnt;
     axi_stream #(
-        .DW(24)
-    )cic_fir1_if(s_axis_aclk,s_axis_aresetn),fir1_fir2_if(s_axis_aclk,s_axis_aresetn),
-    fir2_fir3_if(s_axis_aclk,s_axis_aresetn),fir3_fir4_if(s_axis_aclk,s_axis_aresetn);
-    cic_deci_stream #(DW,125,1,4) the_cic_deci_stream_Inst(
-        s_axis_aclk,s_axis_aresetn,
+        .DW(DW)
+    )cic_fir1_if(clk,rst_n),fir1_fir2_if(clk,rst_n),
+    fir2_fir3_if(clk,rst_n),fir3_fir4_if(clk,rst_n);
+    cic_deci_stream #(DW,5,1,4) the_cic_deci_stream_Inst(
+        clk,rst_n,
         s_axis_tvalid,s_axis_tready,
         s_axis_tdata,
         cic_fir1_if.valid,cic_fir1_if.ready,
@@ -101,7 +105,7 @@ module down_sample #(
         0.50001983,
         0.28671006,0.0,-0.03915077,0.0,0.00243079,0.0
         },2)fir1(
-            s_axis_aclk,s_axis_aresetn,
+            clk,rst_n,
             cic_fir1_if.valid,cic_fir1_if.ready,
             cic_fir1_if.data,
             fir1_fir2_if.valid,fir1_fir2_if.ready,
@@ -116,7 +120,7 @@ module down_sample #(
         0.30391226,0.0,-0.06923229,0.0,0.01820091,
         0.0,-0.00297138,0.0,0.00008272
         },2)fir2(
-            s_axis_aclk,s_axis_aresetn,
+            clk,rst_n,
             fir1_fir2_if.valid,fir1_fir2_if.ready,
             fir1_fir2_if.data,
             fir2_fir3_if.valid,fir2_fir3_if.ready,
@@ -133,7 +137,7 @@ module down_sample #(
         0.0,-0.01411732,0.0,0.00452250,
         0.0,-0.00096161,0.0,0.00005726
         },2)fir3(
-            s_axis_aclk,s_axis_aresetn,
+            clk,rst_n,
             fir2_fir3_if.valid,fir2_fir3_if.ready,
             fir2_fir3_if.data,
             fir3_fir4_if.valid,fir3_fir4_if.ready,
@@ -152,10 +156,24 @@ module down_sample #(
         -0.02079470,0.01102961,0.00472148,-0.00963999,
         0.00365788,0.00316313,-0.00537131,-0.00294735
         },1)fir4(
-            s_axis_aclk,s_axis_aresetn,
+            clk,rst_n,
             fir3_fir4_if.valid,fir3_fir4_if.ready,
             fir3_fir4_if.data,
             m_axis_tvalid,m_axis_tready,
             m_axis_tdata
     );
+    always_ff @( posedge clk ) begin
+        if(!rst_n) begin
+            last_cnt<='0;
+        end
+        else begin
+            if(last_cnt==LAST-1) begin
+                last_cnt<='0;
+            end
+            else if(m_axis_tvalid&&m_axis_tready) begin
+                last_cnt=last_cnt+1'b1;
+            end
+        end
+    end
+    assign m_axis_tlast=(last_cnt==LAST-1);
 endmodule
