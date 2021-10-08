@@ -1,6 +1,6 @@
 `timescale 1ns/10ps
 
-`include "common.sv"
+`include "../common.sv"
 
 module down_sample_tb();
     bit clk,rst_n;
@@ -49,16 +49,20 @@ module down_sample #(
     output logic signed [DW-1:0] data_o
 );
     logic en4096,en2048,en1024,en512;
+    logic signed [DW-1:0] idec4096_r;
     logic signed [DW-1:0] idec4096,idec2048,idec1024,idec512;
     logic signed [DW-1:0] ifil4096,ifil2048,ifil1024,ifil512;
-    counter #(125) the_counter_512000(clk,rst_n,en512000,en4096);
+    counter #(5) the_counter_512000(clk,rst_n,en512000,en4096);
     counter #(2) the_counter_4096(clk,rst_n,en4096,en2048);
     counter #(2) the_counter_2048(clk,rst_n,en2048,en1024);
     counter #(2) the_counter_1024(clk,rst_n,en1024,en512);
-    cic_downsampler #(DW,125,1,4) the_cic_downsampler_Inst(
+    cic_downsampler #(DW,5,1,4) the_cic_downsampler_Inst(
         clk,rst_n,en512000,en4096,
-        data_i,idec4096
+        data_i,idec4096_r
     );
+    always_ff @( posedge clk ) begin
+        if(en4096) idec4096<=idec4096_r;
+    end
     // window kaiser beta=8 fs=4096 fc=1024 order=12
     fir #(DW,13,'{
         0.0,0.00243079,0.0,-0.03915077,0.0,0.28671006,

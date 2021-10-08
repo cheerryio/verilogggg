@@ -46,9 +46,8 @@ module str_integrator #(
     output logic ovalid,
     input wire oready
 );
-    wire ish,osh;
-    assign ish=ivalid&iready;
-    assign osh=ovalid&oready;
+    wire ish=ivalid&iready;
+    wire osh=ovalid&oready;
     assign iready=osh|~ovalid;
     always_ff @( posedge clk ) begin
         if(!rst_n) begin
@@ -87,10 +86,9 @@ module str_comb #(
     output logic ovalid,
     input wire oready
 );
-    wire ish,osh;
+    wire ish=ivalid&iready;
+    wire osh=ovalid&oready;
     logic signed [W-1:0] dly[M];    // apply delay Zexp-M
-    assign ish=ivalid&iready;
-    assign osh=ovalid&oready;
     assign iready=osh|~ovalid;
     generate
         if(M>1)

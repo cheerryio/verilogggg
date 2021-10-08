@@ -81,8 +81,20 @@ module str_fir #(
     generate
         for(genvar t = 0; t < TAPS; t++) begin
             assign coef[t] = COEF[t] * 2.0**(DW-1.0);
-            assign prod[t] = //mul(in, coef[t]);
-                ( (2*DW)'(s_axis_tdata) * (2*DW)'(coef[t]) ) >>> (DW-1);
+        end
+    endgenerate
+    generate
+        for(genvar t = 0; t < TAPS; t++) begin
+            always_ff @( posedge clk ) begin
+                if(!rst_n) begin
+                    prod[t]<='0;
+                end
+                else begin
+                    if(ish) begin
+                        prod[t]=((2*DW)'(s_axis_tdata)*(2*DW)'(coef[t]))>>>(DW-1);
+                    end
+                end
+            end
         end
     endgenerate
     generate
@@ -91,12 +103,14 @@ module str_fir #(
                 if(!rst_n) begin
                     delay[t]<='0;
                 end
-                else if(ish) begin
-                    if(t == 0) begin
-                        delay[0]<=prod[N-t];
-                    end
-                    else begin
-                        delay[t]<=prod[N-t]+delay[t-1];
+                else begin
+                    if(ish) begin
+                        if(t == 0) begin
+                            delay[0]<=prod[N-t];
+                        end
+                        else begin
+                            delay[t]<=prod[N-t]+delay[t-1];
+                        end
                     end
                 end
             end

@@ -52,9 +52,9 @@ module LPDAQ_subsys3_sim();
     /*
      * simulate 
      */
-    orthDds #(32,20,13) theOrthDdsInst_10000Hz(aclk,aresetn,1'b1,32'd4294967,32'd0,,cos1);  ///< 10000Hz
-    orthDds #(32,20,13) theOrthDdsInst_1000Hz(aclk,aresetn,1'b1,32'd429496,32'd0,,cos2);   ///< 1000Hz
-    orthDds #(32,20,13) theOrthDdsInst_100Hz(aclk,aresetn,1'b1,32'd42949,32'd0,,cos3);    ///< 100Hz
+    orthDds #(32,20,13) theOrthDdsInst_10000Hz(aclk,aresetn,1'b1,32'd429496,32'd0,,cos1);  ///< 10000Hz
+    orthDds #(32,20,13) theOrthDdsInst_1000Hz(aclk,aresetn,1'b1,32'd42949,32'd0,,cos2);   ///< 1000Hz
+    orthDds #(32,20,13) theOrthDdsInst_100Hz(aclk,aresetn,1'b1,32'd4294,32'd0,,cos3);    ///< 100Hz
     always_ff @( posedge aclk ) begin
         cos<=cos1+cos2+cos3;
     end

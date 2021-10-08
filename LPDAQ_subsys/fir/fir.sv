@@ -29,19 +29,7 @@ module fir_tb #(
     logic signed [FREQ_DW-1:0] phase = '0;
     logic signed [LC_DW-1:0] sin,cos;
     orthDds #(FREQ_DW, LC_DW, 13) theOrthDdsInst(clk, rst_n, 1'b1, freq, phase, sin,cos);
-    logic signed [LC_DW-1:0] filtered, harm3;
-    logic square = '0, en15;
-    logic [3:0] cnt;
-    always_ff @( posedge clk ) begin
-        if(!rst_n) cnt<='0;
-        else if(en)
-        begin
-            if(cnt<15) cnt<=cnt+1;
-            else cnt<= '0;
-        end
-    end
-    assign en15=cnt==15;
-    always_ff@(posedge clk) if(en15) square <= ~square; 
+    logic signed [LC_DW-1:0] filtered;
     fir #(LC_DW, 27, '{ -0.005646,  0.006428,  0.019960,  0.033857,  0.036123,
                       0.016998, -0.022918, -0.068988, -0.097428, -0.087782,
                      -0.036153,  0.039431,  0.106063,  0.132519,  0.106063,
@@ -67,8 +55,18 @@ module fir #(
     generate
         for(genvar t = 0; t < TAPS; t++) begin
             assign coef[t] = COEF[t] * 2.0**(DW-1.0);
-            assign prod[t] = //mul(in, coef[t]);
-                ( (2*DW)'(in) * (2*DW)'(coef[t]) ) >>> (DW-1);
+        end
+    endgenerate
+    generate
+        for(genvar t = 0; t < TAPS; t++) begin
+            always_ff @( posedge clk ) begin
+                if(!rst_n) begin
+                    prod[t]<='0;
+                end
+                else begin
+                    prod[t]=((2*DW)'(in)*(2*DW)'(coef[t]))>>>(DW-1);
+                end
+            end
         end
     endgenerate
     generate

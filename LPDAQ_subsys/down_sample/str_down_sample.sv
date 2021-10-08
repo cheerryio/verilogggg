@@ -1,6 +1,6 @@
 `timescale 1ns/10ps
 
-`include "common.sv"
+`include "../common.sv"
 
 module str_down_sample_tb;
     bit clk,rst_n;
@@ -62,17 +62,24 @@ module str_down_sample #(
     logic [$clog2(LAST)-1:0] last_cnt;
     axi_stream_proto #(
         .DW(DW)
-    )cic_fir1_if(clk,rst_n),
+    )cic_slice_if(clk,rst_n),slice_fir1_if(clk,rst_n),
     fir1_deci1_if(clk,rst_n),deci1_fir2_if(clk,rst_n),
     fir2_deci2_if(clk,rst_n),deci2_fir3_if(clk,rst_n),
     fir3_deci3_if(clk,rst_n),deci3_fir4_if(clk,rst_n);
 
-    str_cic_downsampler #(DW,125,1,4) the_str_cic_downsampler_Inst(
+    str_cic_downsampler #(DW,5,1,4) the_str_cic_downsampler_Inst(
         clk,rst_n,
         s_axis_tdata,
         s_axis_tvalid,s_axis_tready,
-        cic_fir1_if.data,
-        cic_fir1_if.valid,cic_fir1_if.ready
+        cic_slice_if.data,
+        cic_slice_if.valid,cic_slice_if.ready
+    );
+    str_reg_slice #(24) the_str_reg_slice_Inst(
+        clk,rst_n,
+        cic_slice_if.data,1'b0,
+        cic_slice_if.valid,cic_slice_if.ready,
+        slice_fir1_if.data,slice_fir1_if.last,
+        slice_fir1_if.valid,slice_fir1_if.ready
     );
     // window kaiser beta=8 fs=4096 fc=1024 order=12
     str_fir #(DW,13,'{
@@ -81,8 +88,8 @@ module str_down_sample #(
         0.28671006,0.0,-0.03915077,0.0,0.00243079,0.0
         })the_str_fir1(
             clk,rst_n,
-            cic_fir1_if.data,
-            cic_fir1_if.valid,cic_fir1_if.ready,
+            slice_fir1_if.data,
+            slice_fir1_if.valid,slice_fir1_if.ready,
             fir1_deci1_if.data,
             fir1_deci1_if.valid,fir1_deci1_if.ready
     );

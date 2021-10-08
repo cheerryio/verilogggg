@@ -102,8 +102,9 @@ module cic_downsampler #(
     endgenerate
     // Q1.(DW-1)
     wire signed [DW-1:0] attn = (1.0 / GAIN * 2.0**(DW-1));
+    wire signed [DW-1:0] out_r=((2*DW)'(combs_data[N])*(2*DW)'(attn))>>>(DW-1);
     always_ff@(posedge clk) begin
         if(!rst_n) out <= '0;
-        else if(eno) out <= ((2*DW)'(combs_data[N])*(2*DW)'(attn)) >>> (DW-1);
+        else if(eno) out <= out_r;
     end
 endmodule

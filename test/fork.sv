@@ -11,6 +11,7 @@ module fork_test;
             begin
                 #200;
                 $display("fork2:%t",$time);
+                hello;
             end
         join_none
     end
