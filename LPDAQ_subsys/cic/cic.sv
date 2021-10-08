@@ -71,7 +71,7 @@ module comb #(
     end
 endmodule
 
-module cicDownSampler #(
+module cic_downsampler #(
     parameter integer W = 10,   // in data width
     parameter integer R = 4,    // down sample rate
     parameter integer M = 2,    // delat

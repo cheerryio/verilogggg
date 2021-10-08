@@ -6,3 +6,14 @@ package My_pkg;
         constraint my_ready_constraint {ready dist{0:=5,1:=95};}
     endclass
 endpackage
+
+interface axi_stream_proto #(
+    parameter integer DW=24
+)(
+    input wire s_axis_aclk,s_axis_aresetn
+);
+    logic valid;
+    logic ready;
+    logic last;
+    logic signed [DW-1:0] data;
+endinterface

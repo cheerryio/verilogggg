@@ -346,7 +346,8 @@ endmodule
 module ADS1675_SOURCE_32M_2M_SAMPLE_RATE2 #(
     parameter integer DW=24,
     parameter integer SDW=48,
-    parameter string DIFF_TERM="TRUE"
+    parameter string DIFF_TERM="TRUE",
+    parameter integer DROP=50
 )(
     (*dont_touch="yes",iob="true"*) input wire sclk_p,
     (*dont_touch="yes",iob="true"*) input wire sclk_n,
@@ -364,6 +365,7 @@ module ADS1675_SOURCE_32M_2M_SAMPLE_RATE2 #(
     (*mark_debug="true"*) output logic signed [DW-1:0] data,
     (*mark_debug="true"*) output logic valid
 );
+    logic [$clog2(DROP)-1:0] valid_cnt;
     (*mark_debug="true"*) wire drdy;
     (*mark_debug="true"*) wire dout;
     IBUFGDS #(.DIFF_TERM("TRUE"), .IBUF_LOW_PWR("TRUE"), .IOSTANDARD("LVDS_25")) sclk_buf (.O(sclk), .I(sclk_p), .IB(sclk_n));
@@ -409,11 +411,21 @@ module ADS1675_SOURCE_32M_2M_SAMPLE_RATE2 #(
         end
     end
     always_ff @( posedge sclk ) begin
+        if(!areset_n) begin
+            valid_cnt<='0;
+        end
+        else if(en) begin
+            if(valid_cnt<DROP-1 && drdy_rising) begin
+                valid_cnt=valid_cnt+1'b1; 
+            end
+        end
+    end
+    always_ff @( posedge sclk ) begin
         if(!areset_n) begin 
             valid <= 1'b0;
         end
         else if(en) begin
-            if(drdy_rising) begin 
+            if(drdy_rising && valid_cnt==DROP-1) begin
                 valid <= 1'b1;
             end
             else begin

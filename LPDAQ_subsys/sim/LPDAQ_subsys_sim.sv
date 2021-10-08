@@ -49,9 +49,9 @@ module LPDAQ_subsys_sim();
     /*
      * simulate 
      */
-    orthDds #(32,20,13) theOrthDdsInst_10000Hz(aclk,aresetn,1'b1,32'd4294967,32'd0,,cos1);  ///< 10000Hz
-    orthDds #(32,20,13) theOrthDdsInst_1000Hz(aclk,aresetn,1'b1,32'd429496,32'd0,,cos2);   ///< 1000Hz
-    orthDds #(32,20,13) theOrthDdsInst_100Hz(aclk,aresetn,1'b1,32'd42949,32'd0,,cos3);    ///< 100Hz
+    orthDds #(32,20,13) theOrthDdsInst_10000Hz(aclk,aresetn,1'b1,32'd429496,32'd0,,cos1);  ///< 10000Hz
+    orthDds #(32,20,13) theOrthDdsInst_1000Hz(aclk,aresetn,1'b1,32'd42949,32'd0,,cos2);   ///< 1000Hz
+    orthDds #(32,20,13) theOrthDdsInst_100Hz(aclk,aresetn,1'b1,32'd4294,32'd0,,cos3);    ///< 100Hz
     always_ff @( posedge aclk ) begin
         cos<=cos1+cos2+cos3;
     end
@@ -64,33 +64,19 @@ module LPDAQ_subsys_sim();
                 for(int i=0;i<500000;i++) begin
                     repeat(50) @(posedge fsync);
                     LPDAQ_subsys_sim.UUT.LPDAQ_subsys_i.processing_system7_0.inst.read_data(DATA_BASEADDR+4,4,read_data,resp);
-                    $display("data cnt=%d",read_data);
                     if(read_data!=1'b0) begin
                         LPDAQ_subsys_sim.UUT.LPDAQ_subsys_i.processing_system7_0.inst.read_data(DATA_BASEADDR,4,read_data,resp);
                         result=read_data[0+:24];
-                        recev_data.push_back(result);
                     end
                 end
             end
         join
-        // wait for data check finish
-        repeat(5)@(posedge aclk);
-    end
-    initial begin
-        automatic bit signed [31:0] a,b;
-        forever begin
-            wait(goden_data.size()!=0 && recev_data.size()!=0);
-            a=goden_data.pop_front();
-            b=recev_data.pop_front();
-            $display("a=%x, b=%x",a,b);
-        end
     end
 
     initial begin
         forever begin
             @(posedge fsync);
             data_trans=cos;
-            goden_data.push_back({{8{data_trans[23]}},data_trans});
         end
     end
 

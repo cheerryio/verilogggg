@@ -1,15 +1,6 @@
-`timescale 100ns/10ns
+`timescale 1ns/10ps
 
-interface axi_stream_proto #(
-    parameter integer DW=24
-)(
-    input wire s_axis_aclk,s_axis_aresetn
-);
-    logic valid;
-    logic ready;
-    logic last;
-    logic signed [DW-1:0] data;
-endinterface
+`include "common.sv"
 
 module str_down_sample_tb;
     bit clk,rst_n;
@@ -29,9 +20,9 @@ module str_down_sample_tb;
         v_if.ready<=1'b1;
     end
     //orthDds #(32,24,13) theOrthDdsInst(clk,rst_n,adc_if.valid&adc_if.ready,32'd429496729,32'd0,,cos);
-    orthDds #(32,20,13) theOrthDdsInst_10000Hz(clk,rst_n,adc_if.valid&adc_if.ready,32'd429496729,32'd0,,cos1);  ///< 10000Hz
-    orthDds #(32,20,13) theOrthDdsInst_1000Hz(clk,rst_n,adc_if.valid&adc_if.ready,32'd42949672,32'd0,,cos2);   ///< 1000Hz
-    orthDds #(32,20,13) theOrthDdsInst_100Hz(clk,rst_n,adc_if.valid&adc_if.ready,32'd4294967,32'd0,,cos3);    ///< 100Hz
+    orthDds #(32,20,13) theOrthDdsInst_10000Hz(clk,rst_n,adc_if.valid&adc_if.ready,32'd429496,32'd0,,cos1);  ///< 10000Hz
+    orthDds #(32,20,13) theOrthDdsInst_1000Hz(clk,rst_n,adc_if.valid&adc_if.ready,32'd42949,32'd0,,cos2);   ///< 1000Hz
+    orthDds #(32,20,13) theOrthDdsInst_100Hz(clk,rst_n,adc_if.valid&adc_if.ready,32'd4294,32'd0,,cos3);    ///< 100Hz
     always_ff @( posedge clk ) begin
         if(adc_if.valid&&adc_if.ready) begin
             cos<=cos1+cos2+cos3;
@@ -76,7 +67,7 @@ module str_down_sample #(
     fir2_deci2_if(clk,rst_n),deci2_fir3_if(clk,rst_n),
     fir3_deci3_if(clk,rst_n),deci3_fir4_if(clk,rst_n);
 
-    str_cic_downsampler #(DW,5,1,4) the_str_cic_downsampler_Inst(
+    str_cic_downsampler #(DW,125,1,4) the_str_cic_downsampler_Inst(
         clk,rst_n,
         s_axis_tdata,
         s_axis_tvalid,s_axis_tready,
