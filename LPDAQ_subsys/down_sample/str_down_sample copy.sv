@@ -2,7 +2,7 @@
 
 `include "../common.sv"
 
-module str_down_sample_tb();
+module str_down_sample_tb;
     bit clk,rst_n;
     bit signed [23:0] cos;
     bit signed [19:0] cos1,cos2,cos3;
@@ -28,14 +28,21 @@ module str_down_sample_tb();
             cos<=cos1+cos2+cos3;
         end
     end
-    str_down_sample #(.DW(24),.LAST(10)) the_str_down_sample_Inst(
+    str_down_sample #(24) the_str_down_sample_Inst(
         clk,rst_n,
         cos,
         adc_if.valid,adc_if.ready,
         v_if.data,
-        v_if.valid,v_if.ready,
-        v_if.last
+        v_if.last,
+        v_if.valid,v_if.ready
     );
+    /*
+    cic_deci_stream #(24,4,1,4) the_cic_deci_stream_Inst(
+        clk,rst_n,
+        adc_if.valid,adc_if.ready,cos,
+        v_if.valid,v_if.ready,v_if.data
+    );
+    */
 endmodule
 
 module str_down_sample #(
@@ -48,22 +55,28 @@ module str_down_sample #(
     output logic s_axis_tready,
 
     output logic [DW-1:0] m_axis_tdata,
+    output logic m_axis_tlast,
     output logic m_axis_tvalid,
-    input wire m_axis_tready,
-    output logic m_axis_tlast
+    input wire m_axis_tready
 );
-    logic [$clog2(LAST)-1:0] last_cnt;
     axi_stream_proto #(
         .DW(DW)
-    )cic_slice_if(clk,rst_n),slice_fir1_if(clk,rst_n),
+    )st_if(clk,rst_n),ed_if(clk,rst_n),
+    cic_slice_if(clk,rst_n),slice_fir1_if(clk,rst_n),
     fir1_deci1_if(clk,rst_n),deci1_fir2_if(clk,rst_n),
     fir2_deci2_if(clk,rst_n),deci2_fir3_if(clk,rst_n),
     fir3_deci3_if(clk,rst_n),deci3_fir4_if(clk,rst_n);
-
-    str_cic_downsampler #(DW,5,1,4) the_str_cic_downsampler_Inst(
+    assign st_if.data=s_axis_tdata;
+    assign st_if.valid=s_axis_tvalid;
+    assign s_axis_tready=st_if.ready;
+    assign m_axis_tdata=ed_if.data;
+    assign m_axis_tlast=ed_if.last;
+    assign m_axis_tvalid=ed_if.valid;
+    assign ed_if.ready=m_axis_tready;
+    str_cic_downsampler #(DW,125,1,4) the_str_cic_downsampler_Inst(
         clk,rst_n,
-        s_axis_tdata,
-        s_axis_tvalid,s_axis_tready,
+        st_if.data,
+        st_if.valid,st_if.ready,
         cic_slice_if.data,
         cic_slice_if.valid,cic_slice_if.ready
     );
@@ -152,21 +165,8 @@ module str_down_sample #(
             clk,rst_n,
             deci3_fir4_if.data,
             deci3_fir4_if.valid,deci3_fir4_if.ready,
-            m_axis_tdata,
-            m_axis_tvalid,m_axis_tready
+            ed_if.data,
+            ed_if.valid,ed_if.ready
     );
-    always_ff @( posedge clk ) begin
-        if(!rst_n) begin
-            last_cnt<='0;
-        end
-        else begin
-            if(last_cnt==LAST-1) begin
-                last_cnt<='0;
-            end
-            else if(m_axis_tvalid&&m_axis_tready) begin
-                last_cnt=last_cnt+1'b1;
-            end
-        end
-    end
-    assign m_axis_tlast=(last_cnt==LAST-1);
+    counter #(LAST) the_last_counter(clk,rst_n,ed_if.valid&ed_if.ready,ed_if.last);
 endmodule

@@ -10,7 +10,7 @@ endpackage
 interface axi_stream_proto #(
     parameter integer DW=24
 )(
-    input wire s_axis_aclk,s_axis_aresetn
+    input wire clk,rst_n
 );
     logic valid;
     logic ready;

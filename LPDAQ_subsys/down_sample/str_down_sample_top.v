@@ -10,15 +10,16 @@ module str_down_sample_top #(
     output wire s_axis_tready,
 
     output wire [DW-1:0] m_axis_tdata,
+    output wire m_axis_tlast,
     output wire m_axis_tvalid,
-    input wire m_axis_tready,
-    output wire m_axis_tlast
+    input wire m_axis_tready
 );
     str_down_sample #(DW,LAST) the_str_down_sample_Inst(
         clk,rst_n,
         s_axis_tdata,
         s_axis_tvalid,s_axis_tready,
         m_axis_tdata,
-        m_axis_tvalid,m_axis_tready,m_axis_tlast
+        m_axis_tlast,
+        m_axis_tvalid,m_axis_tready
     );
 endmodule

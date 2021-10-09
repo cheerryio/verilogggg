@@ -16,7 +16,6 @@ module down_sample_tb();
         #50;
         rst_n=1'b1;
     end
-    axi_stream_proto #(24) adc_if(clk,rst_n),v_if(clk,rst_n);
     counter #(195) the_counter_512000(clk,rst_n,1'b1,en512000);
     //orthDds #(32,24,13) theOrthDdsInst(clk,rst_n,adc_if.valid&adc_if.ready,32'd429496729,32'd0,,cos);
     orthDds #(32,20,13) theOrthDdsInst_10000Hz(clk,rst_n,1'b1,32'd429496,32'd0,,cos1);  ///< 10000Hz
@@ -30,13 +29,6 @@ module down_sample_tb();
         en512000,in,
         valid,out
     );
-    /*
-    cic_deci_stream #(24,4,1,4) the_cic_deci_stream_Inst(
-        clk,rst_n,
-        adc_if.valid,adc_if.ready,cos,
-        v_if.valid,v_if.ready,v_if.data
-    );
-    */
 endmodule
 
 module down_sample #(
@@ -49,7 +41,6 @@ module down_sample #(
     output logic signed [DW-1:0] data_o
 );
     logic en4096,en2048,en1024,en512;
-    logic signed [DW-1:0] idec4096_r;
     logic signed [DW-1:0] idec4096,idec2048,idec1024,idec512;
     logic signed [DW-1:0] ifil4096,ifil2048,ifil1024,ifil512;
     counter #(5) the_counter_512000(clk,rst_n,en512000,en4096);
@@ -58,11 +49,8 @@ module down_sample #(
     counter #(2) the_counter_1024(clk,rst_n,en1024,en512);
     cic_downsampler #(DW,5,1,4) the_cic_downsampler_Inst(
         clk,rst_n,en512000,en4096,
-        data_i,idec4096_r
+        data_i,idec4096
     );
-    always_ff @( posedge clk ) begin
-        if(en4096) idec4096<=idec4096_r;
-    end
     // window kaiser beta=8 fs=4096 fc=1024 order=12
     fir #(DW,13,'{
         0.0,0.00243079,0.0,-0.03915077,0.0,0.28671006,
