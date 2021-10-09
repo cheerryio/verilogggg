@@ -43,11 +43,11 @@ module str_down_sample #(
     parameter integer LAST=16000
 )(
     input wire clk,rst_n,
-    input wire [DW-1:0] s_axis_tdata,
+    input wire signed [DW-1:0] s_axis_tdata,
     input wire s_axis_tvalid,
     output logic s_axis_tready,
 
-    output logic [DW-1:0] m_axis_tdata,
+    output logic signed [DW-1:0] m_axis_tdata,
     output logic m_axis_tvalid,
     input wire m_axis_tready,
     output logic m_axis_tlast
@@ -67,13 +67,6 @@ module str_down_sample #(
         cic_slice_if.data,
         cic_slice_if.valid,cic_slice_if.ready
     );
-    str_reg_slice #(24) the_str_reg_slice_Inst(
-        clk,rst_n,
-        cic_slice_if.data,1'b0,
-        cic_slice_if.valid,cic_slice_if.ready,
-        slice_fir1_if.data,slice_fir1_if.last,
-        slice_fir1_if.valid,slice_fir1_if.ready
-    );
     // window kaiser beta=8 fs=4096 fc=1024 order=12
     str_fir #(DW,13,'{
         0.0,0.00243079,0.0,-0.03915077,0.0,0.28671006,
@@ -81,8 +74,8 @@ module str_down_sample #(
         0.28671006,0.0,-0.03915077,0.0,0.00243079,0.0
         })the_str_fir1(
             clk,rst_n,
-            slice_fir1_if.data,
-            slice_fir1_if.valid,slice_fir1_if.ready,
+            cic_slice_if.data,
+            cic_slice_if.valid,cic_slice_if.ready,
             fir1_deci1_if.data,
             fir1_deci1_if.valid,fir1_deci1_if.ready
     );
