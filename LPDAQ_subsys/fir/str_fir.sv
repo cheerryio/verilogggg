@@ -57,12 +57,12 @@ module str_fir #(
     output logic m_axis_tvalid,
     input wire m_axis_tready
 );
+    wire ish=s_axis_tvalid&s_axis_tready;
+    wire osh=m_axis_tvalid&m_axis_tready;
     localparam N=TAPS-1;
     logic signed [DW-1:0] coef[TAPS];
     logic signed [DW-1:0] prod[TAPS];
     logic signed [DW-1:0] delay[TAPS];
-    wire ish=s_axis_tvalid&s_axis_tready;
-    wire osh=m_axis_tvalid&m_axis_tready;
     assign s_axis_tready=osh|~m_axis_tvalid;
     always_ff @( posedge clk ) begin
         if(!rst_n) begin
@@ -80,7 +80,20 @@ module str_fir #(
     generate
         for(genvar t=0;t<TAPS;t++) begin
             assign coef[t]=COEF[t]*2.0**(DW-1.0);
-            assign prod[t]=((2*DW)'(s_axis_tdata)*(2*DW)'(coef[t]))>>>(DW-1);
+        end
+    endgenerate
+    generate
+        for(genvar t=0;t<TAPS;t++) begin
+            always_ff @( posedge clk ) begin
+                if(!rst_n) begin
+                    prod[t]<='0;
+                end
+                else begin
+                    if(ish) begin
+                        prod[t]=((2*DW)'(s_axis_tdata)*(2*DW)'(coef[t]))>>>(DW-1);
+                    end
+                end
+            end
         end
     endgenerate
     generate
