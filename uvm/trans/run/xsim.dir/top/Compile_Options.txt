@@ -1,0 +1,1 @@
+"dut_tb" -relax -s "top" -timescale "1ns/10ps" --incr --nolog 

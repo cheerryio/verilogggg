@@ -1,0 +1,12 @@
+
+{ 
+    crc :  5284306749900208072  , 
+    ccp_crc :  0  , 
+    cmdline : " dut_tb -relax -s top -timescale 1ns/10ps --incr --nolog" , 
+    buildDate : "Nov 18 2020" , 
+    buildTime : "09:20:35" , 
+    linkCmd : "/usr/bin/gcc -Wa,-W  -O -fPIC  -m64  -Wl,--no-as-needed  -Wl,--unresolved-symbols=ignore-all  -o \"xsim.dir/top/xsimk\"   \"xsim.dir/top/obj/xsim_0.lnx64.o\" \"xsim.dir/top/obj/xsim_1.lnx64.o\" \"xsim.dir/top/obj/xsim_2.lnx64.o\" \"xsim.dir/top/obj/xsim_3.lnx64.o\" \"xsim.dir/top/obj/xsim_4.lnx64.o\" \"xsim.dir/top/obj/xsim_5.lnx64.o\" \"xsim.dir/top/obj/xsim_6.lnx64.o\" \"xsim.dir/top/obj/xsim_7.lnx64.o\" \"xsim.dir/top/obj/xsim_8.lnx64.o\" \"xsim.dir/top/obj/xsim_9.lnx64.o\" \"xsim.dir/top/obj/xsim_10.lnx64.o\" -L\"/opt/Xilinx/Vivado/2020.2/lib/lnx64.o\" -lrdi_simulator_kernel  " , 
+    aggregate_nets : 
+    [ 
+    ] 
+} 
