@@ -11,7 +11,6 @@ class my_driver extends uvm_driver #(my_transaction);
     `uvm_component_utils(my_driver);
     function new(string name="my_driver",uvm_component parent=null);
         super.new(name,parent);
-        `uvm_info(get_full_name(),"new is called",UVM_MEDIUM);
     endfunction
     extern virtual function void build_phase(uvm_phase phase);
     extern virtual task main_phase(uvm_phase phase);
@@ -20,14 +19,12 @@ endclass
 
 function void my_driver::build_phase(uvm_phase phase);
     super.build_phase(phase);
-    `uvm_info(get_full_name(),"build_phase called",UVM_MEDIUM);
     if(!uvm_config_db #(virtual dut_if)::get(this,"","vif",vif)) begin
         `uvm_fatal(get_full_name(),"get vif fail");
     end
 endfunction
 
 task my_driver::main_phase(uvm_phase phase);
-    `uvm_info(get_full_name(),"main_phase is called",UVM_MEDIUM);
     vif.data<='0;
     vif.valid<='0;
     wait(vif.rst_n);

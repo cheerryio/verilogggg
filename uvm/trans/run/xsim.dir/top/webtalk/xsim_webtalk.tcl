@@ -1,6 +1,6 @@
 webtalk_init -webtalk_dir /home/dn/verilogggg/uvm/trans/run/xsim.dir/top/webtalk/
 webtalk_register_client -client project
-webtalk_add_data -client project -key date_generated -value "Sun Oct 10 21:40:34 2021" -context "software_version_and_target_device"
+webtalk_add_data -client project -key date_generated -value "Mon Oct 11 13:16:58 2021" -context "software_version_and_target_device"
 webtalk_add_data -client project -key product_version -value "XSIM v2020.2 (64-bit)" -context "software_version_and_target_device"
 webtalk_add_data -client project -key build_version -value "3064766" -context "software_version_and_target_device"
 webtalk_add_data -client project -key os_platform -value "LIN64" -context "software_version_and_target_device"
@@ -14,7 +14,7 @@ webtalk_add_data -client project -key target_package -value "not_applicable" -co
 webtalk_add_data -client project -key target_speed -value "not_applicable" -context "software_version_and_target_device"
 webtalk_add_data -client project -key random_id -value "93b44cd5-42e2-4fb8-b589-f4e367178886" -context "software_version_and_target_device"
 webtalk_add_data -client project -key project_id -value "b74bf44b-444c-4dfd-a049-86b642f147eb" -context "software_version_and_target_device"
-webtalk_add_data -client project -key project_iteration -value "93" -context "software_version_and_target_device"
+webtalk_add_data -client project -key project_iteration -value "99" -context "software_version_and_target_device"
 webtalk_add_data -client project -key os_name -value "Ubuntu" -context "user_environment"
 webtalk_add_data -client project -key os_release -value "Ubuntu 20.04.3 LTS" -context "user_environment"
 webtalk_add_data -client project -key cpu_name -value "AMD Ryzen 7 5800X 8-Core Processor" -context "user_environment"
@@ -27,6 +27,6 @@ webtalk_add_data -client xsim -key Command -value "xsim" -context "xsim\\command
 webtalk_add_data -client xsim -key runtime -value "1155 ns" -context "xsim\\usage"
 webtalk_add_data -client xsim -key iteration -value "103" -context "xsim\\usage"
 webtalk_add_data -client xsim -key Simulation_Time -value "0.02_sec" -context "xsim\\usage"
-webtalk_add_data -client xsim -key Simulation_Memory -value "126364_KB" -context "xsim\\usage"
-webtalk_transmit -clientid 3657834170 -regid "" -xml /home/dn/verilogggg/uvm/trans/run/xsim.dir/top/webtalk/usage_statistics_ext_xsim.xml -html /home/dn/verilogggg/uvm/trans/run/xsim.dir/top/webtalk/usage_statistics_ext_xsim.html -wdm /home/dn/verilogggg/uvm/trans/run/xsim.dir/top/webtalk/usage_statistics_ext_xsim.wdm -intro "<H3>XSIM Usage Report</H3><BR>"
+webtalk_add_data -client xsim -key Simulation_Memory -value "126368_KB" -context "xsim\\usage"
+webtalk_transmit -clientid 2106191765 -regid "" -xml /home/dn/verilogggg/uvm/trans/run/xsim.dir/top/webtalk/usage_statistics_ext_xsim.xml -html /home/dn/verilogggg/uvm/trans/run/xsim.dir/top/webtalk/usage_statistics_ext_xsim.html -wdm /home/dn/verilogggg/uvm/trans/run/xsim.dir/top/webtalk/usage_statistics_ext_xsim.wdm -intro "<H3>XSIM Usage Report</H3><BR>"
 webtalk_terminate

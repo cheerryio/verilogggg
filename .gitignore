@@ -3,3 +3,4 @@
 **/*.log
 **/*.jou
 **/*.pb
+uvm/trans/run/xsim.dir

@@ -33,7 +33,6 @@ task my_model::main_phase(uvm_phase phase);
         new_tr=new("new_tr");
         new_tr.copy(tr);
         ap.write(new_tr);
-        `uvm_info(get_full_name(),"send to scoreboard",UVM_MEDIUM);
     end
 endtask
 `endif
