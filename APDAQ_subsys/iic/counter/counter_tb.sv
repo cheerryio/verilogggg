@@ -15,7 +15,8 @@ module counter_tb #(
         rst_n=0;
         #100 rst_n=1;
     end
-    logic co2,co62;
-    counter #( 2) theCounterTbInst2(clk,rst_n,en,co2);
+    logic co2,co62,co100000000;
+    //counter #( 2) theCounterTbInst2(clk,rst_n,en,co2);
     //counter #(62) theCounterTbInst62(clk,rst_n,en,co62);
+    counter #(100000000) theCounterTbInst100000000(clk,rst_n,en,co2);
 endmodule

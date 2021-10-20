@@ -1,88 +1,8 @@
 `timescale 1ns/10ps
 
-module ads127l01_tb();
-    bit clk,rst_n,en;
-    bit sck,dout,fsync;
-    bit signed [23:0] cos;
-    bit m_axis_tvalid,m_axis_tready;
-    bit signed [23:0] m_axis_tdata;
-    initial begin
-        forever #5 clk=~clk;
-    end
-    initial begin
-        rst_n=1'b0;
-        repeat(10)@(posedge clk);
-        rst_n=1'b1;
-    end
-    orthDds #(32,24,13) theOrthDdsInst(clk,rst_n,1'b1,32'd42949,32'd0,,cos);  ///< 10000Hz
-    ads127l01_512k_master_fsync_model the_ads127l01_512k_master_fsync_model_Inst(
-        clk,rst_n,1'b1,
-        cos,
-        sck,dout,fsync
-    );
-    ads127l01 #(24) the_ads127l01_Inst(
-        .clk(clk),.rst_n(rst_n),.en(1'b1),
-        .sck(sck),.dout(dout),.fsync(fsync),
-        .m_axis_tvalid(m_axis_tvalid),
-        .m_axis_tready(m_axis_tready),
-        .m_axis_tdata(m_axis_tdata)
-    );
-endmodule
-
-module ads127l01_512k_master_fsync_model #(
-
-)(
-    input wire clk,rst_n,en,
-    input wire [23:0] data,
-    output logic sck,dout,fsync
-);
-    logic co32;
-    logic [31:0] shift_data;
-    logic [$clog2(16)-1:0] fsync_cnt;
-    initial begin
-        sck=1'b0;
-        forever begin
-            repeat(4) @(posedge clk);
-            sck=~sck;
-        end
-    end
-    counter #(32) the_counter32(sck,rst_n,1'b1,co32);
-    assign fsync=(fsync_cnt!=1'b0);
-    always_ff @( posedge sck ) begin
-        if(!rst_n) begin
-            fsync_cnt<='0;
-        end
-        else if(en) begin
-            if(co32) begin
-                fsync_cnt=1'b1;
-            end
-            else if(fsync_cnt==15) begin
-                fsync_cnt=1'b0;
-            end
-            else if(fsync_cnt!=1'b0) begin
-                fsync_cnt=fsync_cnt+1;
-            end
-        end
-    end
-    assign dout=shift_data[31];
-    always_ff @( negedge sck ) begin
-        if(!rst_n) begin
-            shift_data<='0;
-        end
-        else if(en) begin
-            if(co32) begin
-                shift_data<={data,{8{1'b0}}};
-            end
-            else begin
-                shift_data<={shift_data[0+:31],1'b0};
-            end
-        end
-    end
-
-endmodule
-
 module ads127l01 #(
-    parameter integer DW=24
+    parameter int DW=24,
+    parameter int LAST=10240
 )(
     input wire clk,rst_n,en,
     output logic fsmode,
@@ -99,13 +19,17 @@ module ads127l01 #(
     (*mark_debug="true"*) input wire dout,
     (*mark_debug="true"*) input wire fsync,
     (*mark_debug="true"*) output logic m_axis_tvalid,
-    (*mark_debug="true"*) input  wire  m_axis_tready,
-    (*mark_debug="true"*) output logic [DW-1:0] m_axis_tdata
+    (*mark_debug="true"*) input wire  m_axis_tready,
+    (*mark_debug="true"*) output logic m_axis_tlast,
+    (*mark_debug="true"*) output logic [DW-1:0] m_axis_tdata,
+
+    (*mark_debug="true"*) output logic high
 );
     (*mark_debug="true"*) logic [31:0] shift_data;
     logic [31:0] start_cnt;
     logic sck_rising,fsync_rising;
     (*mark_debug="true"*) logic dout_r;
+    wire osh=m_axis_tvalid&m_axis_tready;
     assign format   = 1'b1;    // frame sync
     assign fsmode   = 1'b1;    // master
     assign reset_n  = rst_n;
@@ -163,6 +87,8 @@ module ads127l01 #(
             end
         end
     end
+    counter #(LAST) the_last_counter(clk,rst_n,osh,m_axis_tlast);
+    assign high=m_axis_tdata[DW-1]^m_axis_tdata[DW-2];
 endmodule
 
 module Rising2En #( parameter SYNC_STG = 1 )(

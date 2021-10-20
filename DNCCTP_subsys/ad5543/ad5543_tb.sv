@@ -5,6 +5,7 @@ module ad5543_tb();
     bit [15:0] cos;
     bit sclk,sdi,cs_n;
     bit signed [15:0] data;
+    bit ready;
 
     always #10 aclk=~aclk;
     initial begin
@@ -13,11 +14,11 @@ module ad5543_tb();
         areset_n=1'b1;
     end
 
-    orthDds #(32,16,13) theOrthDds_1000Hz_Inst(aclk,areset_n,1'b1,32'd85899,32'sd0,,cos);
+    orthDds #(32,16,13) theOrthDds_1000Hz_Inst(aclk,areset_n,ready,32'd8589900,32'sd0,,cos);
 
-    ad5543 #(16,48) the_ad5543_Inst (
-        aclk,areset_n,
-        1'b1,1'b1,,
+    ad5543 #(16,96) the_ad5543_Inst (
+        aclk,areset_n,1'b1,
+        1'b1,ready,
         cos,
         sclk,sdi,cs_n
     );

@@ -32,4 +32,14 @@ module counter #(
     endgenerate
     
     assign co=en & cnt==N-1;
+
+    property check_counter;
+        int LCount;
+        @(posedge clk) disable iff (!rst_n)
+        (
+            (co,LCount=0) ##1
+            (en,LCount=LCount+1)[*0:N] ##1 (LCount==N-1) |-> (co==1)
+        );
+    endproperty
+    assert property (check_counter);
 endmodule

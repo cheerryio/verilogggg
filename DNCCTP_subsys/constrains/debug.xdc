@@ -1,3 +1,5 @@
+
+
 create_debug_core u_ila_0 ila
 set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_0]
 set_property ALL_PROBE_SAME_MU_CNT 2 [get_debug_cores u_ila_0]
@@ -11,31 +13,23 @@ set_property port_width 1 [get_debug_ports u_ila_0/clk]
 connect_debug_port u_ila_0/clk [get_nets [list DNCCTP_subsys_i/clk_wiz_0/inst/clk_out2]]
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe0]
 set_property port_width 16 [get_debug_ports u_ila_0/probe0]
-connect_debug_port u_ila_0/probe0 [get_nets [list {DNCCTP_subsys_i/axis_data_fifo_0_M_AXIS_TDATA[0]} {DNCCTP_subsys_i/axis_data_fifo_0_M_AXIS_TDATA[1]} {DNCCTP_subsys_i/axis_data_fifo_0_M_AXIS_TDATA[2]} {DNCCTP_subsys_i/axis_data_fifo_0_M_AXIS_TDATA[3]} {DNCCTP_subsys_i/axis_data_fifo_0_M_AXIS_TDATA[4]} {DNCCTP_subsys_i/axis_data_fifo_0_M_AXIS_TDATA[5]} {DNCCTP_subsys_i/axis_data_fifo_0_M_AXIS_TDATA[6]} {DNCCTP_subsys_i/axis_data_fifo_0_M_AXIS_TDATA[7]} {DNCCTP_subsys_i/axis_data_fifo_0_M_AXIS_TDATA[8]} {DNCCTP_subsys_i/axis_data_fifo_0_M_AXIS_TDATA[9]} {DNCCTP_subsys_i/axis_data_fifo_0_M_AXIS_TDATA[10]} {DNCCTP_subsys_i/axis_data_fifo_0_M_AXIS_TDATA[11]} {DNCCTP_subsys_i/axis_data_fifo_0_M_AXIS_TDATA[12]} {DNCCTP_subsys_i/axis_data_fifo_0_M_AXIS_TDATA[13]} {DNCCTP_subsys_i/axis_data_fifo_0_M_AXIS_TDATA[14]} {DNCCTP_subsys_i/axis_data_fifo_0_M_AXIS_TDATA[15]}]]
+connect_debug_port u_ila_0/probe0 [get_nets [list {DNCCTP_subsys_i/ad5543_top/inst/the_ad5543_Inst/s_axis_tdata[0]} {DNCCTP_subsys_i/ad5543_top/inst/the_ad5543_Inst/s_axis_tdata[1]} {DNCCTP_subsys_i/ad5543_top/inst/the_ad5543_Inst/s_axis_tdata[2]} {DNCCTP_subsys_i/ad5543_top/inst/the_ad5543_Inst/s_axis_tdata[3]} {DNCCTP_subsys_i/ad5543_top/inst/the_ad5543_Inst/s_axis_tdata[4]} {DNCCTP_subsys_i/ad5543_top/inst/the_ad5543_Inst/s_axis_tdata[5]} {DNCCTP_subsys_i/ad5543_top/inst/the_ad5543_Inst/s_axis_tdata[6]} {DNCCTP_subsys_i/ad5543_top/inst/the_ad5543_Inst/s_axis_tdata[7]} {DNCCTP_subsys_i/ad5543_top/inst/the_ad5543_Inst/s_axis_tdata[8]} {DNCCTP_subsys_i/ad5543_top/inst/the_ad5543_Inst/s_axis_tdata[9]} {DNCCTP_subsys_i/ad5543_top/inst/the_ad5543_Inst/s_axis_tdata[10]} {DNCCTP_subsys_i/ad5543_top/inst/the_ad5543_Inst/s_axis_tdata[11]} {DNCCTP_subsys_i/ad5543_top/inst/the_ad5543_Inst/s_axis_tdata[12]} {DNCCTP_subsys_i/ad5543_top/inst/the_ad5543_Inst/s_axis_tdata[13]} {DNCCTP_subsys_i/ad5543_top/inst/the_ad5543_Inst/s_axis_tdata[14]} {DNCCTP_subsys_i/ad5543_top/inst/the_ad5543_Inst/s_axis_tdata[15]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe1]
-set_property port_width 16 [get_debug_ports u_ila_0/probe1]
-connect_debug_port u_ila_0/probe1 [get_nets [list {DNCCTP_subsys_i/ad5543_top_0/inst/the_ad5543_Inst/s_axis_tdata[0]} {DNCCTP_subsys_i/ad5543_top_0/inst/the_ad5543_Inst/s_axis_tdata[1]} {DNCCTP_subsys_i/ad5543_top_0/inst/the_ad5543_Inst/s_axis_tdata[2]} {DNCCTP_subsys_i/ad5543_top_0/inst/the_ad5543_Inst/s_axis_tdata[3]} {DNCCTP_subsys_i/ad5543_top_0/inst/the_ad5543_Inst/s_axis_tdata[4]} {DNCCTP_subsys_i/ad5543_top_0/inst/the_ad5543_Inst/s_axis_tdata[5]} {DNCCTP_subsys_i/ad5543_top_0/inst/the_ad5543_Inst/s_axis_tdata[6]} {DNCCTP_subsys_i/ad5543_top_0/inst/the_ad5543_Inst/s_axis_tdata[7]} {DNCCTP_subsys_i/ad5543_top_0/inst/the_ad5543_Inst/s_axis_tdata[8]} {DNCCTP_subsys_i/ad5543_top_0/inst/the_ad5543_Inst/s_axis_tdata[9]} {DNCCTP_subsys_i/ad5543_top_0/inst/the_ad5543_Inst/s_axis_tdata[10]} {DNCCTP_subsys_i/ad5543_top_0/inst/the_ad5543_Inst/s_axis_tdata[11]} {DNCCTP_subsys_i/ad5543_top_0/inst/the_ad5543_Inst/s_axis_tdata[12]} {DNCCTP_subsys_i/ad5543_top_0/inst/the_ad5543_Inst/s_axis_tdata[13]} {DNCCTP_subsys_i/ad5543_top_0/inst/the_ad5543_Inst/s_axis_tdata[14]} {DNCCTP_subsys_i/ad5543_top_0/inst/the_ad5543_Inst/s_axis_tdata[15]}]]
+set_property port_width 1 [get_debug_ports u_ila_0/probe1]
+connect_debug_port u_ila_0/probe1 [get_nets [list DNCCTP_subsys_i/ad5543_top/inst/the_ad5543_Inst/cs_n_r]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe2]
 set_property port_width 1 [get_debug_ports u_ila_0/probe2]
-connect_debug_port u_ila_0/probe2 [get_nets [list DNCCTP_subsys_i/axis_data_fifo_0_M_AXIS_TREADY]]
+connect_debug_port u_ila_0/probe2 [get_nets [list DNCCTP_subsys_i/ad5543_top/inst/the_ad5543_Inst/s_axis_tready]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe3]
 set_property port_width 1 [get_debug_ports u_ila_0/probe3]
-connect_debug_port u_ila_0/probe3 [get_nets [list DNCCTP_subsys_i/axis_data_fifo_0_M_AXIS_TVALID]]
+connect_debug_port u_ila_0/probe3 [get_nets [list DNCCTP_subsys_i/ad5543_top/inst/the_ad5543_Inst/sclk_r]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe4]
 set_property port_width 1 [get_debug_ports u_ila_0/probe4]
-connect_debug_port u_ila_0/probe4 [get_nets [list DNCCTP_subsys_i/ad5543_top_0/inst/the_ad5543_Inst/cs_n]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe5]
-set_property port_width 1 [get_debug_ports u_ila_0/probe5]
-connect_debug_port u_ila_0/probe5 [get_nets [list DNCCTP_subsys_i/ad5543_top_0/inst/the_ad5543_Inst/sclk]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe6]
-set_property port_width 1 [get_debug_ports u_ila_0/probe6]
-connect_debug_port u_ila_0/probe6 [get_nets [list DNCCTP_subsys_i/ad5543_top_0/inst/the_ad5543_Inst/sdi]]
+connect_debug_port u_ila_0/probe4 [get_nets [list DNCCTP_subsys_i/ad5543_top/inst/the_ad5543_Inst/sdi_r]]
 set_property C_CLK_INPUT_FREQ_HZ 300000000 [get_debug_cores dbg_hub]
 set_property C_ENABLE_CLK_DIVIDER false [get_debug_cores dbg_hub]
 set_property C_USER_SCAN_CHAIN 1 [get_debug_cores dbg_hub]

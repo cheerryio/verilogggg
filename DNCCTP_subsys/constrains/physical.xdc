@@ -7,3 +7,4 @@ set_property IOSTANDARD LVCMOS33 [get_ports sdi]
 
 set_property PACKAGE_PIN AG17 [get_ports clk_32M]
 set_property IOSTANDARD LVCMOS33 [get_ports clk_32M]
+

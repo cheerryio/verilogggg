@@ -1,40 +1,5 @@
 `timescale 1ns/10ps
 
-module str_deci_tb();
-    bit clk,rst_n;
-    initial begin
-        forever begin
-            #5 clk=~clk;
-        end
-    end
-    initial begin
-        rst_n=1'b0;
-        #50;
-        rst_n=1'b1;
-    end
-    bit [31:0] in,out;
-    bit ivalid,iready,ovalid,oready;
-    initial begin
-        ivalid=1'b1;
-        oready=1'b1;
-    end
-    always_ff @( posedge clk ) begin
-        if(!rst_n) begin
-            in<='0;
-        end
-        else begin
-            in=in+1'b1;
-        end
-    end
-    str_deci #(32,5) the_str_deci_Inst(
-        clk,rst_n,
-        in,
-        ivalid,iready,
-        out,
-        ovalid,oready
-    );
-endmodule
-
 module str_deci #(
     parameter integer DW=10,
     parameter integer DECI=5
@@ -86,4 +51,14 @@ module str_deci #(
             out<=candi;
         end
     end
+
+    property check_deci;
+        int LCount;
+        @(posedge clk) disable iff(!rst_n)
+        (
+            (osh,LCount=0) ##1
+            (ish,LCount=LCount+1)[*0:DECI] ##1 (LCount==DECI-1) |-> (osh)
+        );
+    endproperty
+    assert property(check_deci);
 endmodule

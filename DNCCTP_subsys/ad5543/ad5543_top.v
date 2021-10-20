@@ -4,7 +4,7 @@ module ad5543_top #(
     parameter integer DW = 16,
     parameter integer IFREQ = 96
 )(
-    input wire s_axis_aclk,s_axis_aresetn,
+    input wire clk,rst_n,
     input wire en,
     input wire s_axis_tvalid,
     output wire s_axis_tready,
@@ -12,7 +12,7 @@ module ad5543_top #(
     output wire sclk,sdi,cs_n
 );
     ad5543 #(DW,IFREQ) the_ad5543_Inst(
-        s_axis_aclk,s_axis_aresetn,
+        clk,rst_n,
         en,
         s_axis_tvalid,
         s_axis_tready,
