@@ -6,8 +6,8 @@ module pcf8563_if_tb();
     bit start;
     bit [7:0] rdata;
     bit done;
-    wire scl;
-    tri0 sda;
+    bit scl_i,scl_o,scl_t;
+    bit sda_i,sda_o,sda_t;
     always #5 clk=~clk;
     initial begin
         rst_n=1'b0;
@@ -26,10 +26,11 @@ module pcf8563_if_tb();
             start=1'b0;
         end
     end
-    pcf8563_if the_pcf8563_if_Inst(
+    pcf8563_if #(500,100000) the_pcf8563_if_Inst(
         clk,rst_n,en,
         start,rdata,
         done,
-        scl,sda
+        scl_i,scl_o,scl_t,
+        sda_i,sda_o,sda_t
     );
 endmodule

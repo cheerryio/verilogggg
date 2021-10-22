@@ -1,22 +1,27 @@
 `timescale 1ns/10ps
 
 module pcf8563_if #(
-    parameter int DIV=500
+    parameter int DIV=500,
+    parameter int GAP=100000000
 )(
     input wire clk,rst_n,en,
     input wire start,
     output logic [7:0] rdata,
     output logic done,
 
-    output logic scl,
-    inout wire sda
+    input wire scl_i,
+    output logic scl_o,
+    output logic scl_t,
+    input wire sda_i,
+    output logic sda_o,
+    output logic sda_t
 );
     wire [6:0] dev_addr=7'h38;
     logic [7:0] reg_addr;
     (*mark_debug="true"*) logic co,co_dly;
     logic w;
     logic [7:0] wd;
-    counter #(100000000) the_counter(clk,rst_n,en,co);
+    counter #(GAP) the_counter(clk,rst_n,en,co);
     logic [1:0] led;
     logic in_cycle;
     always_ff @( posedge clk ) begin
@@ -62,6 +67,7 @@ module pcf8563_if #(
         w,wd,
         rdata,
         done,
-        scl,sda
+        scl_i,scl_o,scl_t,
+        sda_i,sda_o,sda_t
     );
 endmodule

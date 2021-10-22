@@ -8,8 +8,8 @@ module iic_master_tb();
     bit [7:0] reg_addr;
     bit [7:0] wdata,rdata;
     bit done;
-    wire scl;
-    tri0 sda;
+    bit scl_i,scl_o,scl_t;
+    bit sda_i,sda_o,sda_t;
     logic co;
     always #5 clk=~clk;
     initial begin
@@ -31,6 +31,7 @@ module iic_master_tb();
         1'b1,
         wdata,rdata,
         done,
-        scl,sda
+        scl_i,scl_o,scl_t,
+        sda_i,sda_o,sda_t
     );
 endmodule

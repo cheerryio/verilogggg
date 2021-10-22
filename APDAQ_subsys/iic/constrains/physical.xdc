@@ -1,5 +1,2 @@
-set_property PACKAGE_PIN U12 [get_ports scl]
-set_property IOSTANDARD LVCMOS33 [get_ports scl]
-set_property PACKAGE_PIN T12 [get_ports sda]
-set_property IOSTANDARD LVCMOS33 [get_ports sda]
-
+set_property -dict {PACKAGE_PIN U12 IOSTANDARD LVCMOS33} [get_ports IIC_scl_io]
+set_property -dict {PACKAGE_PIN T12 IOSTANDARD LVCMOS33} [get_ports IIC_sda_io]

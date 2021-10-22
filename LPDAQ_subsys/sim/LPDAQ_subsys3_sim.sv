@@ -68,6 +68,7 @@ module LPDAQ_subsys3_sim();
                     repeat(50) @(posedge fsync);
                     `ZYNQ.read_data(RD_CNT_GPIO_BASEADDR,4,read_data,resp);
                     if(read_data!=1'b0) begin
+                        $display("rd_cnt=%d",read_data);
                         `ZYNQ.read_data(DATA_BASEADDR,4,data,resp);
                         result=data[0+:24];
                         recev_data.push_back(result);
