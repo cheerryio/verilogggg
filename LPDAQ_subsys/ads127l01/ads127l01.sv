@@ -15,20 +15,20 @@ module ads127l01 #(
     output logic din,
     output logic cs_n,
     output logic daisy_in,
-    (*mark_debug="true"*) input wire sck,
-    (*mark_debug="true"*) input wire dout,
-    (*mark_debug="true"*) input wire fsync,
-    (*mark_debug="true"*) output logic m_axis_tvalid,
-    (*mark_debug="true"*) input wire  m_axis_tready,
-    (*mark_debug="true"*) output logic m_axis_tlast,
-    (*mark_debug="true"*) output logic [DW-1:0] m_axis_tdata,
+    input wire sck,
+    input wire dout,
+    input wire fsync,
+    output logic m_axis_tvalid,
+    input wire  m_axis_tready,
+    output logic m_axis_tlast,
+    output logic [DW-1:0] m_axis_tdata,
 
-    (*mark_debug="true"*) output logic high
+    output logic high
 );
-    (*mark_debug="true"*) logic [31:0] shift_data;
+    logic [31:0] shift_data;
     logic [31:0] start_cnt;
     logic sck_rising,fsync_rising;
-    (*mark_debug="true"*) logic dout_r;
+    logic dout_r;
     wire osh=m_axis_tvalid&m_axis_tready;
     assign format   = 1'b1;    // frame sync
     assign fsmode   = 1'b1;    // master

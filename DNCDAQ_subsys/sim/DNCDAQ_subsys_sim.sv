@@ -96,8 +96,10 @@ module DNCDAQ_subsys_sim();
 
     initial begin
         automatic bit resp;
+        @(config_finish);
+        repeat(5) @(posedge drdy);
         `ZYNQ.write_data(ADC_ENABLE_GPIO_BASEADDR,4,1'b1,resp);
-        repeat(50)@(posedge drdy);
+        repeat(5)@(posedge drdy);
         forever begin
             @(negedge drdy);
             data_trans=$random();

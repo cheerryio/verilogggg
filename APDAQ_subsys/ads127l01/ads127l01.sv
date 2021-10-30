@@ -27,7 +27,7 @@ module ads127l01 #(
 );
     (*mark_debug="true"*) logic [31:0] shift_data;
     logic [31:0] start_cnt;
-    logic sck_rising,fsync_rising;
+    (*mark_debug="true"*) logic sck_rising,fsync_rising;
     (*mark_debug="true"*) logic dout_r;
     wire osh=m_axis_tvalid&m_axis_tready;
     assign format   = 1'b1;    // frame sync

@@ -11,9 +11,9 @@ module str_down_sample #(
     input wire s_axis_tvalid,
     output logic s_axis_tready,
 
-    (*mark_debug="true"*) output logic signed [DW-1:0] m_axis_tdata,
+    output logic signed [DW-1:0] m_axis_tdata,
     output logic m_axis_tlast,
-    (*mark_debug="true"*) output logic m_axis_tvalid,
+    output logic m_axis_tvalid,
     input wire m_axis_tready
 );
     logic [$clog2(LAST)-1:0] last_cnt;

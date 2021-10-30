@@ -28,10 +28,10 @@ module ads1675_source_16M_sample_rate_2M #(
     output wire sclk,
     input wire areset_n,en,
     // configure
-    output wire dr0,dr1,dr2,
-    output wire fpath,ll_cfg,lvds,clk_sel,
+    output logic dr0,dr1,dr2,
+    output logic fpath,ll_cfg,lvds,clk_sel,
     // control
-    output wire cs_n,start,pown,
+    output logic cs_n,start,pown,
     (*mark_debug="true"*) output logic signed [DW-1:0] data,
     (*mark_debug="true"*) output logic valid
 );
@@ -95,53 +95,58 @@ module ads1675_source_16M_sample_rate_2M #(
 endmodule
 
 module ads1675_source_32M_sample_rate_2M #(
-    parameter integer DW=24,
-    parameter integer SDW=48,
+    parameter int DW=32,
+    parameter int SDW=48,
     parameter string DIFF_TERM="TRUE",
-    parameter integer DROP=50
+    parameter int LAST=20000
 )(
-    (*dont_touch="yes",iob="true"*) input wire sclk_p,
-    (*dont_touch="yes",iob="true"*) input wire sclk_n,
-    (*dont_touch="yes",iob="true"*) input wire drdy_p,
-    (*dont_touch="yes",iob="true"*) input wire drdy_n,
-    (*dont_touch="yes",iob="true"*) input wire dout_p,
-    (*dont_touch="yes",iob="true"*) input wire dout_n,
-    output wire sclk,
+    input wire sclk_p,
+    input wire sclk_n,
+    input wire drdy_p,
+    input wire drdy_n,
+    input wire dout_p,
+    input wire dout_n,
+
+    output logic sclk,
     input wire rst_n,
-    (*mark_debug="true"*) input wire en,
+    (*mark_debug="true"*) input wire external_en,
     // configure
-    output wire dr0,dr1,dr2,
-    output wire fpath,ll_cfg,lvds,clk_sel,
+    output logic [2:0] dr,
+    output logic fpath,ll_cfg,lvds,clk_sel,
     // control
-    output wire cs_n,start,pown,
-    (*mark_debug="true"*) output logic signed [DW-1:0] data,
-    (*mark_debug="true"*) output logic valid
+    output logic cs_n,start,pown,
+    (*mark_debug="true"*) input wire m_axis_tready,
+    (*mark_debug="true"*) output logic m_axis_tvalid,
+    (*mark_debug="true"*) output logic m_axis_tlast,
+    (*mark_debug="true"*) output logic signed [DW-1:0] m_axis_tdata
 );
-    logic [$clog2(DROP)-1:0] valid_cnt;
     (*mark_debug="true"*) wire drdy;
     (*mark_debug="true"*) wire dout;
+    (*mark_debug="true"*) logic [SDW-1:0] shift_data;
+    logic [1:0] drdy_dly;
+    logic dout_r;
+    logic en;
     IBUFGDS #(.DIFF_TERM(DIFF_TERM), .IBUF_LOW_PWR("TRUE"), .IOSTANDARD("LVDS_25")) sclk_buf (.O(sclk), .I(sclk_p), .IB(sclk_n));
     IBUFDS  #(.DIFF_TERM(DIFF_TERM), .IBUF_LOW_PWR("TRUE"), .IOSTANDARD("LVDS_25")) drdy_buf (.O(drdy), .I(drdy_p), .IB(drdy_n));
     IBUFDS  #(.DIFF_TERM(DIFF_TERM), .IBUF_LOW_PWR("TRUE"), .IOSTANDARD("LVDS_25")) din_buf  (.O(dout ), .I(dout_p), .IB(dout_n));
-    assign dr0    =1'b0;
-    assign dr1    =1'b0;
-    assign dr2    =1'b1;
-    assign fpath  =1'b0;
-    assign ll_cfg =1'b1;
+    assign dr[0]=1'b0;
+    assign dr[1]=1'b0;
+    assign dr[2]=1'b1;
+    assign fpath=1'b0;
+    assign ll_cfg=1'b1;
     // OPTIONAL CONFIGURE START
-    assign lvds   =1'b0;
+    assign lvds=1'b0;
     assign clk_sel=1'b0;
     // OPTIONAL CONFIGURE END
-    assign cs_n   =1'b0;
-    assign pown   =1'b1;
-    assign start  =en;
+    assign cs_n=1'b0;
+    assign pown=1'b1;
+    assign start=en;
 
-    (*mark_debug="true"*) logic [SDW-1:0] shift_data;
-    (*mark_debug="true"*) logic [1:0] drdy_dly;
-    (*mark_debug="true"*) logic dout_r;
+    counter #(LAST) the_last_counter(sclk,rst_n,m_axis_tready&m_axis_tvalid,m_axis_tlast);
     always_ff @( posedge sclk ) begin
         drdy_dly<={drdy_dly[0],drdy};
         dout_r<=dout;
+        en<=external_en;
     end
     always_ff @( posedge sclk ) begin
         if(!rst_n) begin
@@ -154,34 +159,24 @@ module ads1675_source_32M_sample_rate_2M #(
     wire drdy_rising=drdy_dly==2'b01;
     always_ff @( posedge sclk ) begin
         if(!rst_n) begin 
-            data<='0;
+            m_axis_tdata<='0;
         end
         else if(en) begin
             if(drdy_rising) begin
-                data<=shift_data[SDW-1-:DW];
-            end
-        end
-    end
-    always_ff @( posedge sclk ) begin
-        if(!rst_n) begin
-            valid_cnt<='0;
-        end
-        else if(en) begin
-            if(valid_cnt<DROP-1 && drdy_rising) begin
-                valid_cnt=valid_cnt+1'b1; 
+                m_axis_tdata<={{8{shift_data[SDW-1]}},shift_data[SDW-1-:24]};
             end
         end
     end
     always_ff @( posedge sclk ) begin
         if(!rst_n) begin 
-            valid <= 1'b0;
+            m_axis_tvalid <= 1'b0;
         end
         else if(en) begin
-            if(drdy_rising && valid_cnt==DROP-1) begin
-                valid <= 1'b1;
+            if(drdy_rising) begin
+                m_axis_tvalid <= 1'b1;
             end
             else begin
-                valid <= 1'b0;
+                m_axis_tvalid <= 1'b0;
             end
         end
     end
